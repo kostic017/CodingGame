@@ -183,8 +183,8 @@ MonoBehaviour:
     height: 1
     prefab: {fileID: 4449387086799100009, guid: 34f19c200f3dfef4eb7db5bf5f1f26ec, type: 3}
   programmables:
-  - position: {x: 0, y: 0}
-    prefab: {fileID: 1528915638184230, guid: 8e0f285c21cdcf14e8d5c06c57ba936b, type: 3}
+  - {fileID: 1528915638184230, guid: 8e0f285c21cdcf14e8d5c06c57ba936b, type: 3}
+  - {fileID: 962482899000133087, guid: 338bfc10882e3f548a7dc0d1db606317, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

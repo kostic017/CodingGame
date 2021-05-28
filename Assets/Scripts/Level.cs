@@ -5,7 +5,7 @@ public class Level
 {
     public LevelObject[,] Tiles { get; private set; }
     public List<Vector2Int> Spawners { get; } = new List<Vector2Int>();
-    public List<Vector2Int> FinishTiles { get; } = new List<Vector2Int>();
+    public List<Vector2Int> Exits { get; } = new List<Vector2Int>();
 
     public Level(int w, int h)
     {

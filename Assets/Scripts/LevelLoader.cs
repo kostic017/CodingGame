@@ -7,7 +7,7 @@ public class LevelLoader : MonoBehaviour
     public Vector3 tileSize;
     public float tileSpacing;
     public LevelObject[] levelObjects;
-    public ProgrammableObject[] programmables;
+    public GameObject[] programmables;
 
     private Level level;
 
@@ -40,17 +40,16 @@ public class LevelLoader : MonoBehaviour
                 }
                 else if (levelObject.prefab.name == "Finish")
                 {
-                    level.FinishTiles.Add(new Vector2Int(c, r));
+                    level.Exits.Add(new Vector2Int(c, r));
                 }
             }
         }
 
-        foreach (var programmable in programmables)
+        for (var i = 0; i < programmables.Length; ++i)
         {
-            var x = programmable.position.x * (tileSize.x + tileSpacing);
-            var z = programmable.position.y * (tileSize.z + tileSpacing);
-            var y = level.Tiles[programmable.position.y, programmable.position.x].height;
-            Instantiate(programmable.prefab, new Vector3(x, y, z), Quaternion.identity);
+            var x = i * (tileSize.x + tileSpacing);
+            var y = level.Tiles[0, i].height;
+            Instantiate(programmables[i], new Vector3(x, y, 0f), Quaternion.Euler(0, 90, 0));
         }
     }
 
