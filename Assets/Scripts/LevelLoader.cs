@@ -7,7 +7,6 @@ public class LevelLoader : MonoBehaviour
     public Vector3 tileSize;
     public float tileSpacing;
     public LevelObject[] levelObjects;
-    public GameObject[] programmables;
 
     private Level level;
 
@@ -16,6 +15,10 @@ public class LevelLoader : MonoBehaviour
     void Awake()
     {
         level = new Level(map.width, map.height);
+
+        var w = map.width * (tileSize.x + tileSpacing);
+        var h = map.width * (tileSize.z + tileSpacing);
+        Camera.main.transform.position = new Vector3(w * 0.5f, Camera.main.transform.position.y, h * 0.5f);
 
         foreach (var levelObject in levelObjects)
             mappings.Add(levelObject.mapColor, levelObject);
@@ -43,13 +46,6 @@ public class LevelLoader : MonoBehaviour
                     level.Exits.Add(new Vector2Int(c, r));
                 }
             }
-        }
-
-        for (var i = 0; i < programmables.Length; ++i)
-        {
-            var x = i * (tileSize.x + tileSpacing);
-            var y = level.Tiles[0, i].height;
-            Instantiate(programmables[i], new Vector3(x, y, 0f), Quaternion.Euler(0, 90, 0));
         }
     }
 
