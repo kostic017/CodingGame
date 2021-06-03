@@ -167,21 +167,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   map: {fileID: 2800000, guid: 05166da81c093c345a454c2ca28a6297, type: 3}
-  tileSize: {x: 4, y: 1, z: 4}
-  tileSpacing: 0.4
+  tileSize:
+    length: 5
+    width: 5
+    height: 5
+  tileSpacing: 0.5
   levelObjects:
   - mapColor: {r: 0, g: 0, b: 0, a: 1}
-    height: 3
     prefab: {fileID: 671621532132123810, guid: 2d5643e4a3396e04080dd95cd4f8098f, type: 3}
+    heightScale: 2
   - mapColor: {r: 1, g: 1, b: 1, a: 1}
-    height: 1
     prefab: {fileID: 7102534813873633955, guid: b1a7a36e286fe1b4dba4283ff010430a, type: 3}
+    heightScale: 1
   - mapColor: {r: 0, g: 1, b: 0, a: 1}
-    height: 3
     prefab: {fileID: 5599816358016061242, guid: ff1433bc76db35e4fab70cdaba1154ac, type: 3}
+    heightScale: 2
   - mapColor: {r: 1, g: 0, b: 0, a: 1}
-    height: 1
     prefab: {fileID: 4449387086799100009, guid: 34f19c200f3dfef4eb7db5bf5f1f26ec, type: 3}
+    heightScale: 1
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,13 +386,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 200, z: 0}
+  m_LocalRotation: {x: 0.5735764, y: 0, z: 0, w: 0.8191521}
+  m_LocalPosition: {x: 0, y: 150, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 70, y: 0, z: 0}
 --- !u!114 &963194229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -403,7 +406,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 100
-  freeLookSensitivity: 3
   zoomSensitivity: 50
 --- !u!1 &1120113446
 GameObject:

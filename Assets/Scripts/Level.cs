@@ -3,12 +3,15 @@ using UnityEngine;
 
 public class Level
 {
-    public LevelObject[,] Tiles { get; private set; }
-    public List<Vector2Int> Spawners { get; } = new List<Vector2Int>();
+    public int W { get; }
+    public int H { get; }
+    public LevelObject[,] Grid { get; private set; }
     public List<Vector2Int> Exits { get; } = new List<Vector2Int>();
 
     public Level(int w, int h)
     {
-        Tiles = new LevelObject[h, w];
+        W = w;
+        H = h;
+        Grid = new LevelObject[h, w];
     }
 }

@@ -4,21 +4,21 @@ using UnityEngine;
 public class LevelLoader : MonoBehaviour
 {
     public Texture2D map;
-    public Vector3 tileSize;
+    public TileSize tileSize;
     public float tileSpacing;
     public LevelObject[] levelObjects;
 
-    private Level level;
+    internal Level Level { get; private set; }
 
     private readonly Dictionary<Color, LevelObject> mappings = new Dictionary<Color, LevelObject>();
 
     void Awake()
     {
-        level = new Level(map.width, map.height);
+        Level = new Level(map.width, map.height);
 
-        var w = map.width * (tileSize.x + tileSpacing);
-        var h = map.width * (tileSize.z + tileSpacing);
-        Camera.main.transform.position = new Vector3(w * 0.5f, Camera.main.transform.position.y, h * 0.5f);
+        var l = map.width * (tileSize.length + tileSpacing);
+        var w = map.height * (tileSize.width + tileSpacing);
+        Camera.main.transform.position = new Vector3(l * 0.5f, Camera.main.transform.position.y, w * 0.25f);
 
         foreach (var levelObject in levelObjects)
             mappings.Add(levelObject.mapColor, levelObject);
@@ -27,26 +27,33 @@ public class LevelLoader : MonoBehaviour
         {
             for (var c = 0; c < map.width; ++c)
             {
-                var x = c * (tileSize.x + tileSpacing);
-                var z = r * (tileSize.z + tileSpacing);
-                
                 var levelObject = mappings[map.GetPixel(c, r)];
-                var position = new Vector3(x, levelObject.height * 0.5f, z);
+                Level.Grid[r, c] = levelObject;
+                
+                var position = GetTilePosition(r, c);
+                position.y = levelObject.heightScale * 0.5f;
+
                 var gameObject = Instantiate(levelObject.prefab, position, Quaternion.identity);
                 
-                level.Tiles[r, c] = levelObject;
-                gameObject.transform.localScale = new Vector3(tileSize.x, levelObject.height, tileSize.z);
+                gameObject.transform.localScale = new Vector3(tileSize.length, tileSize.height * levelObject.heightScale, tileSize.height);
 
                 if (levelObject.prefab.name == "Spawner")
                 {
-                    level.Spawners.Add(new Vector2Int(c, r));
+                    var spawner = gameObject.GetComponent<Spawner>();
+                    spawner.SetPosition(r, c);
+                    spawner.SetLevelLoader(this);
                 }
-                else if (levelObject.prefab.name == "Finish")
+                else if (levelObject.prefab.name == "Exit")
                 {
-                    level.Exits.Add(new Vector2Int(c, r));
+                    Level.Exits.Add(new Vector2Int(c, r));
                 }
             }
         }
+    }
+
+    internal Vector3 GetTilePosition(int r, int c)
+    {
+        return new Vector3(c * (tileSize.length + tileSpacing), 0f, r * (tileSize.width + tileSpacing));
     }
 
 }
