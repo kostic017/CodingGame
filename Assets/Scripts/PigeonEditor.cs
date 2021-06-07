@@ -11,8 +11,19 @@ public class PigeonEditor : MonoBehaviour
     void Awake()
     {
         inGameCodeEditor = GetComponent<InGameCodeEditor.CodeEditor>();
-        SaveCode("Robot", "// Robot Related Code\n");
-        SaveCode("Turret", "// Turret Related Code\n");
+        SaveCode("Robot",
+            "// Robot\n" +
+            "// MoveUp(idx)\n" +
+            "// MoveDown(idx)\n" +
+            "// MoveLeft(idx)\n" +
+            "// MoveRight(idx)\n"
+        );
+        SaveCode("Turret", "// Turret\n");
+    }
+
+    public string GetCode(string name)
+    {
+        return codes[name];
     }
 
     public void LoadCode(string name)

@@ -14,6 +14,7 @@ public class Spawner : MonoBehaviour
         var robot = gameObject.GetComponent<Robot>();
         robot.SetPosition(r, c);
         robot.SetLevelLoader(levelLoader);
+        LevelLoader.Level.Robots.Add(robot);
     }
 
     internal void SetPosition(int r, int c)

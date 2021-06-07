@@ -7,6 +7,7 @@ public class Level
     public int H { get; }
     public LevelObject[,] Grid { get; private set; }
     public List<Vector2Int> Exits { get; } = new List<Vector2Int>();
+    public List<Robot> Robots { get; } = new List<Robot>();
 
     public Level(int w, int h)
     {
