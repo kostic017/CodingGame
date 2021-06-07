@@ -12,11 +12,11 @@ public class PigeonEditor : MonoBehaviour
     {
         inGameCodeEditor = GetComponent<InGameCodeEditor.CodeEditor>();
         SaveCode("Robot",
-            "// Robot\n" +
+            "// Robot\n\n" +
             "// MoveUp(idx)\n" +
             "// MoveDown(idx)\n" +
             "// MoveLeft(idx)\n" +
-            "// MoveRight(idx)\n"
+            "// MoveRight(idx)\n\n"
         );
         SaveCode("Turret", "// Turret\n");
     }

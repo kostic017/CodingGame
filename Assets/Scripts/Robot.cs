@@ -4,6 +4,14 @@ using UnityEngine;
 public class Robot : MonoBehaviour
 {
 
+	enum Move
+    {
+		Up,
+		Down,
+		Left,
+		Right
+    }
+
 	class Target
 	{
 		private bool moved;
@@ -44,7 +52,7 @@ public class Robot : MonoBehaviour
 	private Target target;
 	private LevelLoader levelLoader;
 
-	private readonly Queue<Vector2Int> waypoints = new Queue<Vector2Int>();
+	private readonly Queue<Move> moves = new Queue<Move>();
 
 	void Awake()
 	{
@@ -56,9 +64,12 @@ public class Robot : MonoBehaviour
 
 		if (target == null)
 		{
-			if (waypoints.Count > 0)
+			if (moves.Count > 0)
 			{
-				var targetPos = levelLoader.GetTilePosition(waypoints.Peek().y, waypoints.Peek().x);
+				if (!IsNextMoveValid())
+					throw new RuntimeException("Cannot move robot " + moves.Peek());
+
+				var targetPos = levelLoader.GetTilePosition(NextPosition().y, NextPosition().x);
 				var targetRot = Quaternion.LookRotation(targetPos - transform.position);
 				targetPos.y = transform.position.y;
 				target = new Target(targetPos, targetRot);
@@ -72,15 +83,42 @@ public class Robot : MonoBehaviour
 				if (target.Move(this))
                 {
 					anim.SetBool("Walk_Anim", false);
-					var waypoint = waypoints.Dequeue();
-					c = waypoint.x;
-					r = waypoint.y;
+					c = NextPosition().x;
+					r = NextPosition().y;
+					moves.Dequeue();
 					target = null;
                 }
             }
         }
 
 	}
+
+	private Vector2Int NextPosition()
+    {
+		switch (moves.Peek())
+        {
+			case Move.Up:
+				return new Vector2Int(c, r + 1);
+			case Move.Down:
+				return new Vector2Int(c, r - 1);
+			case Move.Left:
+				return new Vector2Int(c - 1, r);
+			default:
+			case Move.Right:
+				return new Vector2Int(c + 1, r);
+        }
+    }
+
+	
+	bool IsNextMoveValid()
+	{
+		var nextPosition = NextPosition();
+		return nextPosition.x > 0
+			&& nextPosition.x <= LevelLoader.Level.W - 1
+			&& nextPosition.y > 0
+			&& nextPosition.y <= LevelLoader.Level.H - 1
+			&& LevelLoader.Level.Grid[nextPosition.y, nextPosition.x].prefab.name != "Wall";
+    }
 
 	private static Robot GetRobot(int idx)
     {
@@ -89,44 +127,27 @@ public class Robot : MonoBehaviour
 
 	public static object MoveUp(object[] args)
 	{
-		var robot = GetRobot((int)args[0]);
-		if (robot.IsInvalidMove(robot.c, robot.r + 1))
-			throw new RuntimeException("Can't move robot Up");
-		robot.waypoints.Enqueue(new Vector2Int(robot.c, robot.r + 1));
+		GetRobot((int)args[0]).moves.Enqueue(Move.Up);
 		return null;
 	}
 
 	public static object MoveDown(object[] args)
 	{
-		var robot = GetRobot((int)args[0]);
-		if (robot.IsInvalidMove(robot.c, robot.r - 1))
-			throw new RuntimeException("Can't move robot Down");
-		robot.waypoints.Enqueue(new Vector2Int(robot.c, robot.r - 1));
+		GetRobot((int)args[0]).moves.Enqueue(Move.Down);
 		return null;
 	}
 
 	public static object MoveLeft(object[] args)
 	{
-		var robot = GetRobot((int)args[0]);
-		if (robot.IsInvalidMove(robot.c - 1, robot.r))
-			throw new RuntimeException("Can't move robot Left");
-		robot.waypoints.Enqueue(new Vector2Int(robot.c - 1, robot.r));
+		GetRobot((int)args[0]).moves.Enqueue(Move.Left);
 		return null;
 	}
 
 	public static object MoveRight(object[] args)
 	{
-		var robot = GetRobot((int)args[0]);
-		if (robot.IsInvalidMove(robot.c + 1, robot.r))
-			throw new RuntimeException("Can't move robot Right");
-		robot.waypoints.Enqueue(new Vector2Int(robot.c + 1, robot.r));
+		GetRobot((int)args[0]).moves.Enqueue(Move.Right);
 		return null;
 	}
-
-	bool IsInvalidMove(int c, int r)
-	{
-		return c < 0 || c >= LevelLoader.Level.W - 1 || r < 0 || r >= LevelLoader.Level.H - 1 || LevelLoader.Level.Grid[r, c].prefab.name == "Wall";
-    }
 
 	internal void SetPosition(int r, int c)
     {

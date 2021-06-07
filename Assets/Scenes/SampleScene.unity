@@ -876,6 +876,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 100
   zoomSensitivity: 50
+  codeEditor: {fileID: 1232084095}
 --- !u!1 &1120113446
 GameObject:
   m_ObjectHideFlags: 0

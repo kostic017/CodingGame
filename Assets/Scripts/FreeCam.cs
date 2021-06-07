@@ -6,8 +6,13 @@ public class FreeCam : MonoBehaviour
 
     public float zoomSensitivity = 50f;
 
+    public GameObject codeEditor;
+
     void Update()
     {
+        if (codeEditor.activeInHierarchy)
+            return;
+
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
         {
             transform.position += transform.up * movementSpeed * Time.deltaTime;
