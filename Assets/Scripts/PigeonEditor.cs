@@ -1,3 +1,4 @@
+using Kostic017.Pigeon.Symbols;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,20 +13,13 @@ public class PigeonEditor : MonoBehaviour
 
     private readonly Dictionary<string, string> codes = new Dictionary<string, string>();
 
-    void Awake()
+    void Start()
     {
         freeCam = Camera.main.GetComponent<FreeCam>();
         inGameCodeEditor = GetComponent<InGameCodeEditor.CodeEditor>();
-
-        SaveCode("Robot",
-            "// Robot\n\n" +
-            "// MoveUp(idx)\n" +
-            "// MoveDown(idx)\n" +
-            "// MoveLeft(idx)\n" +
-            "// MoveRight(idx)\n\n"
-        );
-
-        SaveCode("Turret", "// Turret\n");
+        SaveCode("Robot", Resources.Load<TextAsset>("Robot").text);
+        SaveCode("Turret", Resources.Load<TextAsset>("Turret").text);
+        gameObject.SetActive(false);
     }
 
     void OnEnable()
