@@ -8,7 +8,7 @@ public class LevelLoader : MonoBehaviour
     public float tileSpacing;
     public LevelObject[] levelObjects;
 
-    internal static Level Level { get; private set; }
+    internal Level Level { get; private set; }
 
     private readonly Dictionary<Color, LevelObject> mappings = new Dictionary<Color, LevelObject>();
 

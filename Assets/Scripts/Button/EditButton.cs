@@ -1,15 +1,13 @@
 using UnityEngine;
 
-public class Programmable : MonoBehaviour
+public class EditButton : MonoBehaviour
 {
     public GameObject codeEditor;
-    public GameObject playButton;
 
-    public void OpenEditor()
+    public void OnClick()
     {
         codeEditor.SetActive(true);
         var pigeoneEditor = codeEditor.GetComponentInChildren<PigeonEditor>();
         pigeoneEditor.LoadCode(name);
-        playButton.SetActive(true);
     }
 }

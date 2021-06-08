@@ -10,7 +10,7 @@ public class PlayButton : MonoBehaviour
 
     public void OnClick()
     {
-        for (var i = 0; i < LevelLoader.Level.Robots.Count; ++i)
+        for (var i = 0; i < levelLoader.Level.Robots.Count; ++i)
         {
             var builtins = new Builtins();
             builtins.RegisterVariable(PigeonType.Int, "idx", true, i);

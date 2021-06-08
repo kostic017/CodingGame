@@ -114,15 +114,15 @@ public class Robot : MonoBehaviour
 	{
 		var nextPosition = NextPosition();
 		return nextPosition.x > 0
-			&& nextPosition.x <= LevelLoader.Level.W - 1
+			&& nextPosition.x <= levelLoader.Level.W - 1
 			&& nextPosition.y > 0
-			&& nextPosition.y <= LevelLoader.Level.H - 1
-			&& LevelLoader.Level.Grid[nextPosition.y, nextPosition.x].prefab.name != "Wall";
+			&& nextPosition.y <= levelLoader.Level.H - 1
+			&& levelLoader.Level.Grid[nextPosition.y, nextPosition.x].prefab.name != "Wall";
     }
 
 	private static Robot GetRobot(int idx)
     {
-		return LevelLoader.Level.Robots[idx];
+		return FindObjectOfType<LevelLoader>().Level.Robots[idx];
     }
 
 	public static object MoveUp(object[] args)
