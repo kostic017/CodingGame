@@ -1,4 +1,3 @@
-using Kostic017.Pigeon.Symbols;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,7 +12,7 @@ public class PigeonEditor : MonoBehaviour
 
     private readonly Dictionary<string, string> codes = new Dictionary<string, string>();
 
-    void Start()
+    void Awake()
     {
         freeCam = Camera.main.GetComponent<FreeCam>();
         inGameCodeEditor = GetComponent<InGameCodeEditor.CodeEditor>();
@@ -43,7 +42,6 @@ public class PigeonEditor : MonoBehaviour
     {
         file = name;
         inGameCodeEditor.Text = codes[name] ?? "";
-        inGameCodeEditor.InputField.MoveTextEnd(false);
         inGameCodeEditor.InputField.Select();
     }
 

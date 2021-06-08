@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3f0a955a6baef27468893681ab13e59d, type: 3}
-  m_Name: Pigeon Syntax
+  m_Name: Syntax
   m_EditorClassIdentifier: 
   languageName: C#
   delimiterSymbols: '[ ] ( ) { } ; : , .'
   keywordGroups:
   - group: Keyword Group
-    keywords: "if\r else for\r to\r downto do while break continue return let const"
+    keywords: "if else for\r to\r downto do while break continue return bool int
+      float string"
     highlightColor: {r: 0.3372549, g: 0.6117647, b: 0.8392157, a: 1}
     caseSensitive: 1
   symbolGroup:
@@ -37,6 +38,6 @@ MonoBehaviour:
     highlightColor: {r: 0.79607844, g: 0.52156866, b: 0.32941177, a: 1}
   autoIndent:
     autoIndentMode: 2
-    allowAutoIndent: 1
+    allowAutoIndent: 0
     indentIncreaseCharacter: 123
     indentDecreaseCharacter: 125

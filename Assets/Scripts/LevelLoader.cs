@@ -28,7 +28,7 @@ public class LevelLoader : MonoBehaviour
             for (var c = 0; c < map.width; ++c)
             {
                 var levelObject = mappings[map.GetPixel(c, r)];
-                Level.Grid[r, c] = levelObject;
+                Level.Tiles[r, c] = levelObject.prefab.name;
                 
                 var position = GetTilePosition(r, c);
                 position.y = levelObject.heightScale * 0.5f;
@@ -45,7 +45,7 @@ public class LevelLoader : MonoBehaviour
                 }
                 else if (levelObject.prefab.name == "Exit")
                 {
-                    Level.Exits.Add(new Vector2Int(c, r));
+                    Level.SetExit(c, r);
                 }
             }
         }
