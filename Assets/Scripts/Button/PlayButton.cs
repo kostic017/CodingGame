@@ -10,16 +10,19 @@ public class PlayButton : MonoBehaviour
 
     public void OnClick()
     {
-        for (var i = 0; i < levelLoader.Level.Robots.Count; ++i)
+        foreach (var robot in levelLoader.Level.Robots)
         {
-            var builtins = new Builtins();
-            builtins.RegisterVariable(PigeonType.Int, "idx", true, i);
-            builtins.RegisterFunction(PigeonType.Void, "MoveUp", new Variable[] { new Variable(PigeonType.Int) }, Robot.MoveUp);
-            builtins.RegisterFunction(PigeonType.Void, "MoveDown", new Variable[] { new Variable(PigeonType.Int) }, Robot.MoveDown);
-            builtins.RegisterFunction(PigeonType.Void, "MoveLeft", new Variable[] { new Variable(PigeonType.Int) }, Robot.MoveLeft);
-            builtins.RegisterFunction(PigeonType.Void, "MoveRight", new Variable[] { new Variable(PigeonType.Int) }, Robot.MoveRight);
+            var b = new Builtins();
+            b.RegisterFunction(PigeonType.Int, "GetX", new Variable[] { }, robot.GetX);
+            b.RegisterFunction(PigeonType.Int, "GetY", new Variable[] { }, robot.GetY);
+            b.RegisterFunction(PigeonType.Void, "MoveUp", new Variable[] {}, robot.MoveUp);
+            b.RegisterFunction(PigeonType.Void, "MoveDown", new Variable[] { }, robot.MoveDown);
+            b.RegisterFunction(PigeonType.Void, "MoveLeft", new Variable[] { }, robot.MoveLeft);
+            b.RegisterFunction(PigeonType.Void, "MoveRight", new Variable[] { }, robot.MoveRight);
+            b.RegisterFunction(PigeonType.Void, "Print", new Variable[] { new Variable(PigeonType.Any) }, Print);
+            b.RegisterFunction(PigeonType.String, "GetTile", new Variable[] { new Variable(PigeonType.Int), new Variable(PigeonType.Int) }, levelLoader.Level.GetTile);
 
-            var interpreter = new Interpreter(pigeonEditor.GetCode("Robot"), builtins);
+            var interpreter = new Interpreter(pigeonEditor.GetCode("Robot"), b);
             if (interpreter.HasNoErrors())
                 interpreter.Evaluate();
             else
@@ -29,5 +32,11 @@ public class PlayButton : MonoBehaviour
                 Debug.Log(sw.ToString());
             }
         }
+    }
+
+    public object Print(object[] args)
+    {
+        print(args[0].ToString());
+        return null;
     }
 }

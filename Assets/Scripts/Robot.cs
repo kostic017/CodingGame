@@ -120,32 +120,37 @@ public class Robot : MonoBehaviour
 			&& levelLoader.Level.Grid[nextPosition.y, nextPosition.x].prefab.name != "Wall";
     }
 
-	private static Robot GetRobot(int idx)
+	public object GetX(object[] _)
     {
-		return FindObjectOfType<LevelLoader>().Level.Robots[idx];
+		return c;
     }
 
-	public static object MoveUp(object[] args)
+	public object GetY(object[] _)
+    {
+		return r;
+    }
+
+	public object MoveUp(object[] _)
 	{
-		GetRobot((int)args[0]).moves.Enqueue(Move.Up);
+		moves.Enqueue(Move.Up);
 		return null;
 	}
 
-	public static object MoveDown(object[] args)
+	public object MoveDown(object[] _)
 	{
-		GetRobot((int)args[0]).moves.Enqueue(Move.Down);
+		moves.Enqueue(Move.Down);
 		return null;
 	}
 
-	public static object MoveLeft(object[] args)
+	public object MoveLeft(object[] _)
 	{
-		GetRobot((int)args[0]).moves.Enqueue(Move.Left);
+		moves.Enqueue(Move.Left);
 		return null;
 	}
 
-	public static object MoveRight(object[] args)
+	public object MoveRight(object[] _)
 	{
-		GetRobot((int)args[0]).moves.Enqueue(Move.Right);
+		moves.Enqueue(Move.Right);
 		return null;
 	}
 

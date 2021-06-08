@@ -15,4 +15,9 @@ public class Level
         H = h;
         Grid = new LevelObject[h, w];
     }
+
+    public object GetTile(object[] args)
+    {
+        return Grid[(int)args[1], (int)args[0]].prefab.name;
+    }
 }
