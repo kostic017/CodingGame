@@ -17,10 +17,10 @@ public class Robot : MonoBehaviour
 		private bool rotated;
 		private bool calculated;
 
-		private Robot robot;
 		private Vector2Int tile;
 		private Vector3 position;
 		private Quaternion rotation;
+		private readonly Robot robot;
 
 		internal Target(Vector2Int tile, Robot robot)
 		{
