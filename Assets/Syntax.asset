@@ -16,8 +16,8 @@ MonoBehaviour:
   delimiterSymbols: '[ ] ( ) { } ; : , .'
   keywordGroups:
   - group: Keyword Group
-    keywords: "if else for\r to\r downto do while break continue return bool int
-      float string"
+    keywords: if else for to downto do while break continue return bool int float
+      string void
     highlightColor: {r: 0.3372549, g: 0.6117647, b: 0.8392157, a: 1}
     caseSensitive: 1
   symbolGroup:

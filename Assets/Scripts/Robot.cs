@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Robot : MonoBehaviour
@@ -124,16 +123,16 @@ public class Robot : MonoBehaviour
 	void ValidateMove(Move move)
 	{
 		var nextPos = NextPosition(move);
-		if (nextPos.x < 0 || nextPos.x >= levelLoader.Level.W - 1 || nextPos.y < 0 || nextPos.y >= levelLoader.Level.H - 1 || levelLoader.Level.Tiles[nextPos.y, nextPos.x] == "Wall")
+		if (nextPos.x < 0 || nextPos.x >= levelLoader.Level.W  || nextPos.y < 0 || nextPos.y >= levelLoader.Level.H || levelLoader.Level.Tiles[nextPos.y, nextPos.x] == "Wall")
 			throw new RuntimeException($"Invalid move {move}");
     }
 
-	public object GetX(object[] _)
+	public object X(object[] _)
     {
 		return c;
 	}
 
-	public object GetY(object[] _)
+	public object Y(object[] _)
     {
 		return r;
     }

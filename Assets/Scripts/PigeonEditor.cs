@@ -1,3 +1,4 @@
+using Kostic017.Pigeon.Symbols;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,7 +30,8 @@ public class PigeonEditor : MonoBehaviour
 
     void OnDisable()
     {
-        freeCam.enabled = true;
+        if (freeCam != null)
+            freeCam.enabled = true;
         playButton.SetActive(true);
     }
 
