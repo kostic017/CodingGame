@@ -43,7 +43,7 @@ public class RobotTarget
 	{
 		if (rotated) return true;
 		if (Quaternion.Angle(robot.transform.rotation, rotation) < 0.001f) rotated = true;
-		robot.transform.rotation = Quaternion.RotateTowards(robot.transform.rotation, rotation, robot.rotationSpeed * Time.deltaTime);
+		robot.transform.rotation = Quaternion.RotateTowards(robot.transform.rotation, rotation, robot.RotationSpeed * Time.deltaTime);
 		return rotated;
 	}
 
@@ -51,7 +51,7 @@ public class RobotTarget
 	{
 		if (moved) return true;
 		if (Vector3.Distance(robot.transform.position, position) < 0.001f) moved = true;
-		robot.transform.position = Vector3.MoveTowards(robot.transform.position, position, robot.moveSpeed * Time.deltaTime);
+		robot.transform.position = Vector3.MoveTowards(robot.transform.position, position, robot.MoveSpeed * Time.deltaTime);
 		return moved;
 	}
 }

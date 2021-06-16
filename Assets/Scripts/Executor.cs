@@ -10,7 +10,7 @@ public class Executor : MonoBehaviour
     public LevelLoader levelLoader;
     public PigeonEditor pigeonEditor;
 
-    private Dictionary<string, object> globals = new Dictionary<string, object>();
+    private readonly Dictionary<string, object> globals = new Dictionary<string, object>();
 
     private readonly Dictionary<int, Thread> threads = new Dictionary<int, Thread>();
 
@@ -99,6 +99,15 @@ public class Executor : MonoBehaviour
             var sw = new StringWriter();
             interpreter.PrintErr(sw);
             Debug.Log(sw.ToString());
+        }
+    }
+
+    internal void StopExecution(Robot robot)
+    {
+        if (threads.ContainsKey(robot.gameObject.GetInstanceID()))
+        {
+            threads[robot.gameObject.GetInstanceID()].Abort();
+            threads.Remove(robot.gameObject.GetInstanceID());
         }
     }
 

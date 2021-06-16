@@ -10,7 +10,7 @@ public class Spawner : MonoBehaviour
     private Executor executor;
     private LevelLoader levelLoader;
 
-    private readonly int MAX_ROBOTS = 5;
+    private readonly int MaxRobotCount = 5;
 
     void Start()
     {
@@ -20,7 +20,7 @@ public class Spawner : MonoBehaviour
 
     void Update()
     {
-        if (executor.IsRunning && levelLoader.Level.Robots.Count < MAX_ROBOTS)
+        if (executor.IsRunning && levelLoader.Level.Robots.Count < MaxRobotCount)
         {
             foreach (var rob in levelLoader.Level.Robots)
                 if (rob.R == r && rob.C == c)

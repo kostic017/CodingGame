@@ -10,25 +10,29 @@ public class Robot : MonoBehaviour
 		Right
 	}
 
-	public float moveSpeed = 10f;
-	public float rotationSpeed = 40f;
+	internal readonly float MoveSpeed = 10f;
+	internal readonly float RotationSpeed = 100f;
 
 	internal int R { get; private set; }
 	internal int C { get; private set; }
 
 	private Animator anim;
+	private Executor executor;
 	private LevelLoader levelLoader;
 
 	private RobotTarget target;
 
 	void Awake()
 	{
+		executor = FindObjectOfType<Executor>();
 		anim = gameObject.GetComponent<Animator>();
 		levelLoader = FindObjectOfType<LevelLoader>();
 	}
 
 	void Update()
 	{
+		if (C == levelLoader.Level.Exit.x && R == levelLoader.Level.Exit.y)
+			Destroy(gameObject);
 
 		if (target != null)
 		{
@@ -51,7 +55,13 @@ public class Robot : MonoBehaviour
 
 	}
 
-	private Vector2Int NextPosition(Move move)
+    void OnDestroy()
+    {
+        executor.StopExecution(this);
+		levelLoader.Level.Robots.Remove(this);
+    }
+
+    private Vector2Int NextPosition(Move move)
 	{
         return move switch
         {
