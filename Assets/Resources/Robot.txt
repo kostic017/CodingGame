@@ -1,18 +1,28 @@
 // ROBOT
 
-queue = queue_create();
-
 moves = "";
-queue_enqueue(queue, moves);
 
-while to_string_l(walk(moves)) != exit()
+if (!check_global("moves"))
 {
-    moves = queue_dequeue(queue);
-    enqueue("U", moves, queue);
-    enqueue("D", moves, queue);
-    enqueue("L", moves, queue);
-    enqueue("R", moves, queue);
+    queue = queue_create();
+    queue_enqueue(queue, moves);
+
+    while to_string_l(walk(moves)) != exit()
+    {
+        moves = queue_dequeue(queue);
+        enqueue("U", moves, queue);
+        enqueue("D", moves, queue);
+        enqueue("L", moves, queue);
+        enqueue("R", moves, queue);
+    }
+
+    set_global("moves", moves);
 }
+else
+{
+    moves = get_global("moves");
+}
+
 
 for i = 0 to string_length(moves) - 1
 {

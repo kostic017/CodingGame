@@ -10,6 +10,8 @@ public class Executor : MonoBehaviour
     public LevelLoader levelLoader;
     public PigeonEditor pigeonEditor;
 
+    private Dictionary<string, object> globals = new Dictionary<string, object>();
+
     private readonly Dictionary<int, Thread> threads = new Dictionary<int, Thread>();
 
     internal bool IsRunning { get; private set; }
@@ -78,7 +80,12 @@ public class Executor : MonoBehaviour
         b.RegisterFunction(PigeonType.Bool, "set_in", PigeonSet.In, PigeonType.Int, PigeonType.Any);
 
         b.RegisterFunction(PigeonType.Void, "print", Print, PigeonType.Any);
-            
+
+        b.RegisterFunction(PigeonType.Void, "set_global", SetGlobal, PigeonType.String, PigeonType.Any);
+        b.RegisterFunction(PigeonType.Void, "unset_global", UnsetGlobal, PigeonType.String);
+        b.RegisterFunction(PigeonType.Bool, "check_global", CheckGlobal, PigeonType.String);
+        b.RegisterFunction(PigeonType.Any, "get_global", GetGlobal, PigeonType.String);
+
         var interpreter = new Interpreter(pigeonEditor.GetCode("Robot"), b);
 
         if (interpreter.HasNoErrors())
@@ -93,6 +100,28 @@ public class Executor : MonoBehaviour
             interpreter.PrintErr(sw);
             Debug.Log(sw.ToString());
         }
+    }
+
+    public object SetGlobal(object[] args)
+    {
+        globals[(string)args[0]] = args[1];
+        return null;
+    }
+
+    public object CheckGlobal(object[] args)
+    {
+        return globals.ContainsKey((string)args[0]);
+    }
+
+    public object UnsetGlobal(object[] args)
+    {
+        globals.Remove((string)args[0]);
+        return null;
+    }
+
+    public object GetGlobal(object[] args)
+    {
+        return globals[(string)args[0]];
     }
 
     public object Print(object[] args)

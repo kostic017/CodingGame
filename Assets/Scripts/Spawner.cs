@@ -10,6 +10,8 @@ public class Spawner : MonoBehaviour
     private Executor executor;
     private LevelLoader levelLoader;
 
+    private readonly int MAX_ROBOTS = 5;
+
     void Start()
     {
         executor = FindObjectOfType<Executor>();
@@ -18,12 +20,11 @@ public class Spawner : MonoBehaviour
 
     void Update()
     {
-        if (executor.IsRunning)
+        if (executor.IsRunning && levelLoader.Level.Robots.Count < MAX_ROBOTS)
         {
             foreach (var rob in levelLoader.Level.Robots)
                 if (rob.R == r && rob.C == c)
                     return;
-            
             var gameObject = Instantiate(prefab, transform.position + Vector3.up * transform.localScale.y * 0.5f, Quaternion.identity);
             var robot = gameObject.GetComponent<Robot>();
             robot.SetPosition(r, c);
