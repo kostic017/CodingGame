@@ -8,9 +8,6 @@ queue_enqueue(queue, moves);
 while to_string_l(walk(moves)) != exit()
 {
     moves = queue_dequeue(queue);
-
-    print(moves);
-
     enqueue("U", moves, queue);
     enqueue("D", moves, queue);
     enqueue("L", moves, queue);

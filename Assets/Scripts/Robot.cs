@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class Robot : MonoBehaviour
 {
-
 	enum Move
 	{
 		Up,
@@ -11,73 +10,21 @@ public class Robot : MonoBehaviour
 		Right
 	}
 
-	class Target
-	{
-		private bool moved;
-		private bool rotated;
-		private bool calculated;
-
-		private Vector2Int tile;
-		private Vector3 position;
-		private Quaternion rotation;
-		private readonly Robot robot;
-
-		internal Target(Vector2Int tile, Robot robot)
-		{
-			this.tile = tile;
-			this.robot = robot;
-		}
-
-		internal int C()
-        {
-			return tile.x;
-        }
-
-		internal int R()
-        {
-			return tile.y;
-        }
-
-		internal void Calculate()
-        {
-			if (calculated) return;
-			position = robot.levelLoader.GetTilePosition(tile.y, tile.x);
-			rotation = Quaternion.LookRotation(position - robot.transform.position);
-			position.y = robot.transform.position.y;
-			calculated = true;
-        }
-
-		internal bool Rotate()
-		{
-			if (rotated) return true;
-			if (Quaternion.Angle(robot.transform.rotation, rotation) < 0.001f) rotated = true;
-			robot.transform.rotation = Quaternion.RotateTowards(robot.transform.rotation, rotation, robot.rotationSpeed * Time.deltaTime);
-			return rotated;
-		}
-
-		internal bool Move()
-		{
-			if (moved) return true;
-			if (Vector3.Distance(robot.transform.position, position) < 0.001f) moved = true;
-			robot.transform.position = Vector3.MoveTowards(robot.transform.position, position, robot.moveSpeed * Time.deltaTime);
-			return moved;
-		}
-	}
-
 	public float moveSpeed = 10f;
 	public float rotationSpeed = 40f;
 
-	private int r;
-	private int c;
+	internal int R { get; private set; }
+	internal int C { get; private set; }
 
 	private Animator anim;
 	private LevelLoader levelLoader;
 
-	private Target target;
+	private RobotTarget target;
 
 	void Awake()
 	{
 		anim = gameObject.GetComponent<Animator>();
+		levelLoader = FindObjectOfType<LevelLoader>();
 	}
 
 	void Update()
@@ -94,8 +41,8 @@ public class Robot : MonoBehaviour
 				if (target.Move())
 				{
 					anim.SetBool("Walk_Anim", false);
-					c = target.C();
-					r = target.R();
+					C = target.C();
+					R = target.R();
 					target = null;
 				}
 			}
@@ -108,16 +55,16 @@ public class Robot : MonoBehaviour
 	{
         return move switch
         {
-            Move.Up => new Vector2Int(c, r + 1),
-            Move.Down => new Vector2Int(c, r - 1),
-            Move.Left => new Vector2Int(c - 1, r),
-            _ => new Vector2Int(c + 1, r),
+            Move.Up => new Vector2Int(C, R + 1),
+            Move.Down => new Vector2Int(C, R - 1),
+            Move.Left => new Vector2Int(C - 1, R),
+            _ => new Vector2Int(C + 1, R),
         };
     }
 
 	private void SetTarget(Move move)
 	{
-		target = new Target(NextPosition(move), this);
+		target = new RobotTarget(this, NextPosition(move), levelLoader);
 	}
 
 	void ValidateMove(Move move)
@@ -129,12 +76,12 @@ public class Robot : MonoBehaviour
 
 	public object X(object[] _)
     {
-		return c;
+		return C;
 	}
 
 	public object Y(object[] _)
     {
-		return r;
+		return R;
     }
 
 	public object MoveUp(object[] _)
@@ -171,12 +118,7 @@ public class Robot : MonoBehaviour
 
 	internal void SetPosition(int r, int c)
     {
-		this.r = r;
-		this.c = c;
-    }
-
-	internal void SetLevelLoader(LevelLoader levelLoader)
-    {
-		this.levelLoader = levelLoader;
+		R = r;
+		C = c;
     }
 }

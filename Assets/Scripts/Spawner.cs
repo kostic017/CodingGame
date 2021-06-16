@@ -3,28 +3,38 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     public GameObject prefab;
-    
+
     private int r;
     private int c;
+
+    private Executor executor;
     private LevelLoader levelLoader;
 
     void Start()
     {
-        var gameObject = Instantiate(prefab, transform.position + Vector3.up * transform.localScale.y * 0.5f, Quaternion.identity);
-        var robot = gameObject.GetComponent<Robot>();
-        robot.SetPosition(r, c);
-        robot.SetLevelLoader(levelLoader);
-        levelLoader.Level.Robots.Add(robot);
+        executor = FindObjectOfType<Executor>();
+        levelLoader = FindObjectOfType<LevelLoader>();
+    }
+
+    void Update()
+    {
+        if (executor.IsRunning)
+        {
+            foreach (var rob in levelLoader.Level.Robots)
+                if (rob.R == r && rob.C == c)
+                    return;
+            
+            var gameObject = Instantiate(prefab, transform.position + Vector3.up * transform.localScale.y * 0.5f, Quaternion.identity);
+            var robot = gameObject.GetComponent<Robot>();
+            robot.SetPosition(r, c);
+            executor.StartExecution(robot);
+            levelLoader.Level.Robots.Add(robot);
+        }
     }
 
     internal void SetPosition(int r, int c)
     {
         this.r = r;
         this.c = c;
-    }
-
-    internal void SetLevelLoader(LevelLoader levelLoader)
-    {
-        this.levelLoader = levelLoader;
     }
 }

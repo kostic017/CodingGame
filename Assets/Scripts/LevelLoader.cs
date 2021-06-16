@@ -41,7 +41,6 @@ public class LevelLoader : MonoBehaviour
                 {
                     var spawner = gameObject.GetComponent<Spawner>();
                     spawner.SetPosition(r, c);
-                    spawner.SetLevelLoader(this);
                 }
                 else if (levelObject.prefab.name == "Exit")
                 {
