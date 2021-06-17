@@ -35,7 +35,7 @@ public class LevelLoader : MonoBehaviour
 
                 var gameObject = Instantiate(levelObject.prefab, position, Quaternion.identity);
                 
-                gameObject.transform.localScale = new Vector3(tileSize.length, tileSize.height * levelObject.heightScale, tileSize.height);
+                gameObject.transform.localScale = new Vector3(tileSize.length, tileSize.height * levelObject.heightScale, tileSize.length);
 
                 if (levelObject.prefab.name == "Spawner")
                 {

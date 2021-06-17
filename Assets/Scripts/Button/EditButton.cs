@@ -7,7 +7,6 @@ public class EditButton : MonoBehaviour
     public void OnClick()
     {
         codeEditor.SetActive(true);
-        var pigeoneEditor = codeEditor.GetComponentInChildren<PigeonEditor>();
-        pigeoneEditor.LoadCode(name);
+        codeEditor.GetComponentInChildren<PigeonEditor>().LoadCode(name);
     }
 }

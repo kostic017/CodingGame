@@ -27,6 +27,7 @@ public class Robot : MonoBehaviour
 		executor = FindObjectOfType<Executor>();
 		anim = gameObject.GetComponent<Animator>();
 		levelLoader = FindObjectOfType<LevelLoader>();
+		anim.speed = 1.2f;
 	}
 
 	void Update()
@@ -44,7 +45,6 @@ public class Robot : MonoBehaviour
 			{
 				if (target.Move())
 				{
-					anim.SetBool("Walk_Anim", false);
 					C = target.C();
 					R = target.R();
 					target = null;

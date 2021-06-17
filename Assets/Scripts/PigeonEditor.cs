@@ -1,4 +1,3 @@
-using Kostic017.Pigeon.Symbols;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,11 +14,11 @@ public class PigeonEditor : MonoBehaviour
 
     void Awake()
     {
+        gameObject.SetActive(false);
         freeCam = Camera.main.GetComponent<FreeCam>();
         inGameCodeEditor = GetComponent<InGameCodeEditor.CodeEditor>();
         SaveCode("Robot", Resources.Load<TextAsset>("Robot").text);
         SaveCode("Turret", Resources.Load<TextAsset>("Turret").text);
-        gameObject.SetActive(false);
     }
 
     void OnEnable()

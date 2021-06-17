@@ -170,18 +170,18 @@ MonoBehaviour:
   tileSize:
     length: 5
     width: 5
-    height: 5
-  tileSpacing: 0.5
+    height: 1
+  tileSpacing: 0.8
   levelObjects:
   - mapColor: {r: 0, g: 0, b: 0, a: 1}
     prefab: {fileID: 671621532132123810, guid: 2d5643e4a3396e04080dd95cd4f8098f, type: 3}
-    heightScale: 2
+    heightScale: 1
   - mapColor: {r: 1, g: 1, b: 1, a: 1}
     prefab: {fileID: 7102534813873633955, guid: b1a7a36e286fe1b4dba4283ff010430a, type: 3}
     heightScale: 1
   - mapColor: {r: 0, g: 1, b: 0, a: 1}
     prefab: {fileID: 5599816358016061242, guid: ff1433bc76db35e4fab70cdaba1154ac, type: 3}
-    heightScale: 2
+    heightScale: 1
   - mapColor: {r: 1, g: 0, b: 0, a: 1}
     prefab: {fileID: 4449387086799100009, guid: 34f19c200f3dfef4eb7db5bf5f1f26ec, type: 3}
     heightScale: 1
@@ -222,7 +222,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 10, y: -215}
-  m_SizeDelta: {x: 80, y: 80}
+  m_SizeDelta: {x: 90, y: 90}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &224181145
 MonoBehaviour:
@@ -883,7 +883,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 10, y: -215}
-  m_SizeDelta: {x: 80, y: 80}
+  m_SizeDelta: {x: 90, y: 90}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1435184395
 MonoBehaviour:
@@ -1511,6 +1511,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: InGameCodeEditor
       objectReference: {fileID: 0}
+    - target: {fileID: 1937729412433764, guid: 79a74f96889fc1c429f043e7fa8caf72, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 114069207860691744, guid: 79a74f96889fc1c429f043e7fa8caf72, type: 3}
       propertyPath: m_textAlignment
       value: 65535
@@ -1641,7 +1645,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 224857267984180766, guid: 79a74f96889fc1c429f043e7fa8caf72, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.49554002
+      value: -0.49454004
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79a74f96889fc1c429f043e7fa8caf72, type: 3}
