@@ -6,11 +6,9 @@ public class Level
     internal int W { get; }
     internal int H { get; }
     internal string[,] Tiles { get; private set; }
+    internal List<Robot> Robots { get; } = new List<Robot>();
     internal List<Turret> Turrets { get; } = new List<Turret>();
     internal Vector2Int Exit { get; private set; } = new Vector2Int();
-    internal Dictionary<int, Robot> Robots { get; } = new Dictionary<int, Robot>();
-
-    private int lastRobotId = 0;
 
     internal Level(int w, int h)
     {
@@ -26,9 +24,8 @@ public class Level
 
     internal void Add(Robot robot)
     {
-        robot.Id = lastRobotId;
-        Robots.Add(robot.Id, robot);
-        ++lastRobotId;
+        robot.Id = Robots.Count;
+        Robots.Add(robot);
     }
 
     internal void Add(Turret turret)
@@ -39,7 +36,7 @@ public class Level
 
     internal void Remove(Robot robot)
     {
-        Robots.Remove(robot.Id);
+        Robots.Remove(robot);
     }
 
     public object GetTile(object[] args)
@@ -49,22 +46,16 @@ public class Level
 
     public object RobotX(object[] args)
     {
-        var id = (int)args[0];
-        if (!Robots.ContainsKey(id))
-            return int.MaxValue;
-        return Robots[id].Positon.x;
+        return Robots[(int)args[0]].Positon.x;
     }
 
     public object RobotY(object[] args)
     {
-        var id = (int)args[0];
-        if (!Robots.ContainsKey(id))
-            return int.MaxValue;
-        return Robots[id].Positon.z;
+        return Robots[(int)args[0]].Positon.z;
     }
 
-    public object RobotMaxId(object[] _)
+    public object RobotCount(object[] _)
     {
-        return lastRobotId;
+        return Robots.Count;
     }
 }

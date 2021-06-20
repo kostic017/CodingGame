@@ -22,7 +22,7 @@ public class Robot : MonoBehaviour
 	private Executor executor;
 	private LevelLoader levelLoader;
 
-	private int hp = 2;
+	private int hp = 3;
 	private RobotTarget target;
 
 	void Awake()
@@ -45,6 +45,9 @@ public class Robot : MonoBehaviour
 
 		if (target != null)
 		{
+
+			if (anim.GetBool("Open_Anim") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime <= 0.7f)
+				return;
 
 			target.Calculate();
 			anim.SetBool("Walk_Anim", true);

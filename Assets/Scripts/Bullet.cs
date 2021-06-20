@@ -2,13 +2,15 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float speed = 20f;
+    public float speed = 50f;
 
     private Robot target;
+    private Turret turret;
 
-    internal void Seek(Robot t)
+    internal void SetTarget(Turret t)
     {
-        target = t;
+        turret = t;
+        target = turret.Target;
     }
     
     void Update()
@@ -23,8 +25,10 @@ public class Bullet : MonoBehaviour
 
         if (Vector3.Distance(transform.position, target.transform.position) < 0.001f)
         {
-            target.Damage();
             Destroy(gameObject);
+            target.Damage();
+            if (turret.Target == target)
+                turret.Target = null;
         }
     }
 }

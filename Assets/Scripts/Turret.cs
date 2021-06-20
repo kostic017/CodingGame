@@ -8,11 +8,11 @@ public class Turret : MonoBehaviour
     private Executor executor;
     private LevelLoader levelLoader;
 
-    private Robot target;
     private float lastShoot;
     private Vector3 position;
     
     internal int Id { get; set; }
+    internal Robot Target { get; set; }
 
     internal readonly float Range = 20f;
     internal readonly float FireDelay = 5f;
@@ -32,15 +32,15 @@ public class Turret : MonoBehaviour
 
     void Update()
     {
-        if (target != null)
+        if (Target != null)
         {
-            if (Vector3.Distance(transform.position, target.transform.position) > Range)
+            if (Vector3.Distance(transform.position, Target.transform.position) > Range)
             {
-                target = null;
+                Target = null;
                 return;
             }
 
-            transform.LookAt(target.transform.position);
+            transform.LookAt(Target.transform.position);
             
             if (Time.time - lastShoot > FireDelay)
             {
@@ -54,7 +54,7 @@ public class Turret : MonoBehaviour
     {
         var go = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         var bullet = go.GetComponent<Bullet>();
-        bullet.Seek(target);
+        bullet.SetTarget(this);
     }
 
     void OnDestroy()
@@ -74,8 +74,7 @@ public class Turret : MonoBehaviour
 
     public object Shoot(object[] args)
     {
-        if (levelLoader.Level.Robots.ContainsKey((int)args[0]))
-            target = levelLoader.Level.Robots[(int)args[0]];
+        Target = levelLoader.Level.Robots[(int)args[0]];
         return null;
     }
 }

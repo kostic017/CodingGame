@@ -22,7 +22,7 @@ public class Spawner : MonoBehaviour
     {
         if (executor.IsRunning && levelLoader.Level.Robots.Count < MaxRobotCount)
         {
-            foreach (var rob in levelLoader.Level.Robots.Values)
+            foreach (var rob in levelLoader.Level.Robots)
                 if (rob.Row == Row && rob.Col == Col)
                     return;
             var gameObject = Instantiate(prefab, transform.position + Vector3.up * transform.localScale.y * 0.5f, Quaternion.identity);

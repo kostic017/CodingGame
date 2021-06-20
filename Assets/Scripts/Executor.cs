@@ -46,7 +46,7 @@ public class Executor : MonoBehaviour
     {
         OnDestroy();
         IsRunning = false;
-        foreach (var robot in levelLoader.Level.Robots.Values)
+        foreach (var robot in levelLoader.Level.Robots)
             Destroy(robot.gameObject);
         foreach (var turret in levelLoader.Level.Turrets)
             turret.transform.rotation = Quaternion.identity;
@@ -126,7 +126,7 @@ public class Executor : MonoBehaviour
 
         b.RegisterFunction(PigeonType.Float, "robot_x", levelLoader.Level.RobotX, PigeonType.Int);
         b.RegisterFunction(PigeonType.Float, "robot_y", levelLoader.Level.RobotY, PigeonType.Int);
-        b.RegisterFunction(PigeonType.Int, "robot_maxid", levelLoader.Level.RobotMaxId);
+        b.RegisterFunction(PigeonType.Int, "robot_count", levelLoader.Level.RobotCount);
 
         b.RegisterFunction(PigeonType.Void, "shoot", turret.Shoot, PigeonType.Int);
         b.RegisterFunction(PigeonType.Void, "print", Print, PigeonType.Any);

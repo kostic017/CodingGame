@@ -2,7 +2,7 @@
 
 while true
 {
-    if (robot_maxid() == 0)
+    if (robot_count() == 0)
         continue;
  
     target = 0;
@@ -11,7 +11,7 @@ while true
     if (dist > RANGE)
         continue;
 
-    for i = 0 to robot_maxid() - 1
+    for i = 0 to robot_count() - 1
     {
         if (d(i) < dist && dist <= RANGE)
         {
