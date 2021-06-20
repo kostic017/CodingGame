@@ -10,6 +10,9 @@ public class Executor : MonoBehaviour
     public LevelLoader levelLoader;
     public PigeonEditor pigeonEditor;
 
+    public EditButton robotButton;
+    public EditButton turretButton;
+
     private readonly Dictionary<int, Thread> threads = new Dictionary<int, Thread>();
     private readonly Dictionary<string, object> globals = new Dictionary<string, object>();
 
@@ -33,6 +36,8 @@ public class Executor : MonoBehaviour
     internal void Run()
     {
         IsRunning = true;
+        robotButton.gameObject.SetActive(false);
+        turretButton.gameObject.SetActive(false);
         foreach (var turret in levelLoader.Level.Turrets)
             StartExecution(turret);
     }
@@ -46,6 +51,8 @@ public class Executor : MonoBehaviour
         foreach (var turret in levelLoader.Level.Turrets)
             turret.transform.rotation = Quaternion.identity;
         levelLoader.Level.Robots.Clear();
+        robotButton.gameObject.SetActive(true);
+        turretButton.gameObject.SetActive(true);
     }
 
     internal void StartExecution(Robot robot)

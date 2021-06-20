@@ -1178,6 +1178,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelLoader: {fileID: 38357089}
   pigeonEditor: {fileID: 2146086729}
+  robotButton: {fileID: 1794173794}
+  turretButton: {fileID: 1120113450}
 --- !u!4 &1875410274
 Transform:
   m_ObjectHideFlags: 0

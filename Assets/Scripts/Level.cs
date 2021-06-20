@@ -10,6 +10,8 @@ public class Level
     internal Vector2Int Exit { get; private set; } = new Vector2Int();
     internal Dictionary<int, Robot> Robots { get; } = new Dictionary<int, Robot>();
 
+    private int lastRobotId = 0;
+
     internal Level(int w, int h)
     {
         W = w;
@@ -24,8 +26,9 @@ public class Level
 
     internal void Add(Robot robot)
     {
-        robot.Id = Robots.Count;
+        robot.Id = lastRobotId;
         Robots.Add(robot.Id, robot);
+        ++lastRobotId;
     }
 
     internal void Add(Turret turret)
@@ -36,7 +39,7 @@ public class Level
 
     internal void Remove(Robot robot)
     {
-        Robots[robot.Id] = null;
+        Robots.Remove(robot.Id);
     }
 
     public object GetTile(object[] args)
@@ -47,7 +50,7 @@ public class Level
     public object RobotX(object[] args)
     {
         var id = (int)args[0];
-        if (Robots[id] == null)
+        if (!Robots.ContainsKey(id))
             return int.MaxValue;
         return Robots[id].Positon.x;
     }
@@ -55,13 +58,13 @@ public class Level
     public object RobotY(object[] args)
     {
         var id = (int)args[0];
-        if (Robots[id] == null) 
+        if (!Robots.ContainsKey(id))
             return int.MaxValue;
         return Robots[id].Positon.z;
     }
 
     public object RobotMaxId(object[] _)
     {
-        return Robots.Count;
+        return lastRobotId;
     }
 }
