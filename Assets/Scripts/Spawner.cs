@@ -4,13 +4,13 @@ public class Spawner : MonoBehaviour
 {
     public GameObject prefab;
 
-    private int r;
-    private int c;
+    internal int Row { get; private set; }
+    internal int Col { get; private set; }
 
     private Executor executor;
     private LevelLoader levelLoader;
 
-    private readonly int MaxRobotCount = 5;
+    private readonly int MaxRobotCount = 3;
 
     void Start()
     {
@@ -22,20 +22,20 @@ public class Spawner : MonoBehaviour
     {
         if (executor.IsRunning && levelLoader.Level.Robots.Count < MaxRobotCount)
         {
-            foreach (var rob in levelLoader.Level.Robots)
-                if (rob.R == r && rob.C == c)
+            foreach (var rob in levelLoader.Level.Robots.Values)
+                if (rob.Row == Row && rob.Col == Col)
                     return;
             var gameObject = Instantiate(prefab, transform.position + Vector3.up * transform.localScale.y * 0.5f, Quaternion.identity);
             var robot = gameObject.GetComponent<Robot>();
-            robot.SetPosition(r, c);
+            robot.SetPosition(Row, Col);
+            levelLoader.Level.Add(robot);
             executor.StartExecution(robot);
-            levelLoader.Level.Robots.Add(robot);
         }
     }
 
     internal void SetPosition(int r, int c)
     {
-        this.r = r;
-        this.c = c;
+        Row = r;
+        Col = c;
     }
 }

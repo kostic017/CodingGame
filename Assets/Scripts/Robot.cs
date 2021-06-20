@@ -13,13 +13,16 @@ public class Robot : MonoBehaviour
 	internal readonly float MoveSpeed = 10f;
 	internal readonly float RotationSpeed = 100f;
 
-	internal int R { get; private set; }
-	internal int C { get; private set; }
+	internal int Id { get; set; }
+	internal int Row { get; private set; }
+	internal int Col { get; private set; }
+	internal Vector3 Positon { get; private set; }
 
 	private Animator anim;
 	private Executor executor;
 	private LevelLoader levelLoader;
 
+	private int hp = 2;
 	private RobotTarget target;
 
 	void Awake()
@@ -32,8 +35,13 @@ public class Robot : MonoBehaviour
 
 	void Update()
 	{
-		if (C == levelLoader.Level.Exit.x && R == levelLoader.Level.Exit.y)
+		Positon = transform.position;
+
+		if (hp <= 0 || (Col == levelLoader.Level.Exit.x && Row == levelLoader.Level.Exit.y))
+        {
 			Destroy(gameObject);
+			return;
+        }
 
 		if (target != null)
 		{
@@ -45,30 +53,34 @@ public class Robot : MonoBehaviour
 			{
 				if (target.Move())
 				{
-					C = target.C();
-					R = target.R();
+					Col = target.Col();
+					Row = target.Row();
 					target = null;
 				}
 			}
 
 		}
-
 	}
+
+    internal void Damage()
+    {
+		--hp;
+    }
 
     void OnDestroy()
     {
-        executor.StopExecution(this);
-		levelLoader.Level.Robots.Remove(this);
+        executor.StopExecution(gameObject);
+		levelLoader.Level.Remove(this);
     }
 
     private Vector2Int NextPosition(Move move)
 	{
         return move switch
         {
-            Move.Up => new Vector2Int(C, R + 1),
-            Move.Down => new Vector2Int(C, R - 1),
-            Move.Left => new Vector2Int(C - 1, R),
-            _ => new Vector2Int(C + 1, R),
+            Move.Up => new Vector2Int(Col, Row + 1),
+            Move.Down => new Vector2Int(Col, Row - 1),
+            Move.Left => new Vector2Int(Col - 1, Row),
+            _ => new Vector2Int(Col + 1, Row),
         };
     }
 
@@ -84,18 +96,19 @@ public class Robot : MonoBehaviour
 			throw new RuntimeException($"Invalid move {move}");
     }
 
-	public object X(object[] _)
+	public object C(object[] _)
     {
-		return C;
+		return Col;
 	}
 
-	public object Y(object[] _)
+	public object R(object[] _)
     {
-		return R;
+		return Row;
     }
 
 	public object MoveUp(object[] _)
 	{
+		executor.Log($"MoveUp {Id}");
 		ValidateMove(Move.Up);
 		SetTarget(Move.Up);
 		while (target != null);
@@ -104,6 +117,7 @@ public class Robot : MonoBehaviour
 
 	public object MoveDown(object[] _)
 	{
+		executor.Log($"MoveDown {Id}");
 		ValidateMove(Move.Down);
 		SetTarget(Move.Down);
 		while (target != null);
@@ -112,6 +126,7 @@ public class Robot : MonoBehaviour
 
 	public object MoveLeft(object[] _)
 	{
+		executor.Log($"MoveLeft {Id}");
 		ValidateMove(Move.Left);
 		SetTarget(Move.Left);
 		while (target != null);
@@ -120,6 +135,7 @@ public class Robot : MonoBehaviour
 
 	public object MoveRight(object[] _)
 	{
+		executor.Log($"MoveRight {Id}");
 		ValidateMove(Move.Right);
 		SetTarget(Move.Right);
 		while (target != null);
@@ -128,7 +144,7 @@ public class Robot : MonoBehaviour
 
 	internal void SetPosition(int r, int c)
     {
-		R = r;
-		C = c;
+		Row = r;
+		Col = c;
     }
 }

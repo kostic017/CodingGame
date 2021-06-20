@@ -2,7 +2,7 @@
 
 moves = "";
 
-if (!check_global("moves"))
+if (!global_check("moves"))
 {
     queue = queue_create();
     queue_enqueue(queue, moves);
@@ -16,11 +16,11 @@ if (!check_global("moves"))
         enqueue("R", moves, queue);
     }
 
-    set_global("moves", moves);
+    global_set("moves", moves);
 }
 else
 {
-    moves = get_global("moves");
+    moves = global_get("moves");
 }
 
 
@@ -52,8 +52,8 @@ bool makes_loop(string moves)
 {
     v = set_create();
 
-    x = x();
-    y = y();
+    x = c();
+    y = r();
 
     for i = 0 to string_length(moves) - 1
     {
@@ -85,8 +85,8 @@ int walk(string moves)
 {
     l = list_create();
 
-    x = x();
-    y = y();
+    x = c();
+    y = r();
 
     for i = 0 to string_length(moves) - 1
     {
@@ -130,7 +130,7 @@ string to_string_l(int l)
 
 string exit()
 {
-    return "(" + EXIT_X + ", " + EXIT_Y + ")";
+    return "(" + EXIT_C + ", " + EXIT_R + ")";
 }
 
 string last_char(string moves)

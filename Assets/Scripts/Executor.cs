@@ -10,11 +10,12 @@ public class Executor : MonoBehaviour
     public LevelLoader levelLoader;
     public PigeonEditor pigeonEditor;
 
+    private readonly Dictionary<int, Thread> threads = new Dictionary<int, Thread>();
     private readonly Dictionary<string, object> globals = new Dictionary<string, object>();
 
-    private readonly Dictionary<int, Thread> threads = new Dictionary<int, Thread>();
-
     internal bool IsRunning { get; private set; }
+
+    private readonly bool ShouldLog = false;
 
     void OnDestroy()
     {
@@ -23,17 +24,27 @@ public class Executor : MonoBehaviour
         threads.Clear();
     }
 
+    internal void Log(string message)
+    {
+        if (ShouldLog)
+            print(message);
+    }
+
     internal void Run()
     {
         IsRunning = true;
+        foreach (var turret in levelLoader.Level.Turrets)
+            StartExecution(turret);
     }
 
     internal void Stop()
     {
         OnDestroy();
         IsRunning = false;
-        foreach (var robot in levelLoader.Level.Robots)
+        foreach (var robot in levelLoader.Level.Robots.Values)
             Destroy(robot.gameObject);
+        foreach (var turret in levelLoader.Level.Turrets)
+            turret.transform.rotation = Quaternion.identity;
         levelLoader.Level.Robots.Clear();
     }
 
@@ -41,11 +52,13 @@ public class Executor : MonoBehaviour
     {
         var b = new Builtins();
 
-        b.RegisterFunction(PigeonType.Int, "x", robot.X);
-        b.RegisterFunction(PigeonType.Int, "y", robot.Y);
+        b.RegisterFunction(PigeonType.Int, "r", robot.R);
+        b.RegisterFunction(PigeonType.Int, "c", robot.C);
 
-        b.RegisterVariable(PigeonType.Int, "EXIT_X", true, levelLoader.Level.Exit.x);
-        b.RegisterVariable(PigeonType.Int, "EXIT_Y", true, levelLoader.Level.Exit.y);
+        b.RegisterVariable(PigeonType.Int, "ID", true, robot.Id);
+
+        b.RegisterVariable(PigeonType.Int, "EXIT_C", true, levelLoader.Level.Exit.x);
+        b.RegisterVariable(PigeonType.Int, "EXIT_R", true, levelLoader.Level.Exit.y);
 
         b.RegisterVariable(PigeonType.Int, "LEVEL_WIDTH", true, levelLoader.Level.W);
         b.RegisterVariable(PigeonType.Int, "LEVEL_HEIGHT", true, levelLoader.Level.H);
@@ -81,54 +94,87 @@ public class Executor : MonoBehaviour
 
         b.RegisterFunction(PigeonType.Void, "print", Print, PigeonType.Any);
 
-        b.RegisterFunction(PigeonType.Void, "set_global", SetGlobal, PigeonType.String, PigeonType.Any);
-        b.RegisterFunction(PigeonType.Void, "unset_global", UnsetGlobal, PigeonType.String);
-        b.RegisterFunction(PigeonType.Bool, "check_global", CheckGlobal, PigeonType.String);
-        b.RegisterFunction(PigeonType.Any, "get_global", GetGlobal, PigeonType.String);
+        b.RegisterFunction(PigeonType.Void, "global_set", GlobalSet, PigeonType.String, PigeonType.Any);
+        b.RegisterFunction(PigeonType.Void, "global_unset", GlobalUnset, PigeonType.String);
+        b.RegisterFunction(PigeonType.Bool, "global_check", GlobalCheck, PigeonType.String);
+        b.RegisterFunction(PigeonType.Any, "global_get", GlobalGet, PigeonType.String);
 
         var interpreter = new Interpreter(pigeonEditor.GetCode("Robot"), b);
 
         if (interpreter.HasNoErrors())
-        {
-            Thread thread = new Thread(interpreter.Evaluate);
-            threads.Add(robot.gameObject.GetInstanceID(), thread);
-            thread.Start();
-        }
+            StartExecution(interpreter, robot.gameObject);
         else
-        {
-            var sw = new StringWriter();
-            interpreter.PrintErr(sw);
-            Debug.Log(sw.ToString());
-        }
+            PrintErrors(interpreter);
     }
 
-    internal void StopExecution(Robot robot)
+    internal void StartExecution(Turret turret)
     {
-        if (threads.ContainsKey(robot.gameObject.GetInstanceID()))
+        var b = new Builtins();
+
+        b.RegisterVariable(PigeonType.Int, "ID", true, turret.Id);
+        b.RegisterVariable(PigeonType.Float, "RANGE", true, turret.Range);
+
+        b.RegisterFunction(PigeonType.Float, "x", turret.X);
+        b.RegisterFunction(PigeonType.Float, "y", turret.Y);
+
+        b.RegisterFunction(PigeonType.Float, "robot_x", levelLoader.Level.RobotX, PigeonType.Int);
+        b.RegisterFunction(PigeonType.Float, "robot_y", levelLoader.Level.RobotY, PigeonType.Int);
+        b.RegisterFunction(PigeonType.Int, "robot_maxid", levelLoader.Level.RobotMaxId);
+
+        b.RegisterFunction(PigeonType.Void, "shoot", turret.Shoot, PigeonType.Int);
+        b.RegisterFunction(PigeonType.Void, "print", Print, PigeonType.Any);
+        b.RegisterFunction(PigeonType.Float, "sqrt", Sqrt, PigeonType.Float);
+
+        var interpreter = new Interpreter(pigeonEditor.GetCode("Turret"), b);
+
+        if (interpreter.HasNoErrors())
+            StartExecution(interpreter, turret.gameObject);
+        else
+            PrintErrors(interpreter);
+    }
+
+    void StartExecution(Interpreter interpreter, GameObject obj)
+    {
+        Thread thread = new Thread(interpreter.Evaluate);
+        threads.Add(obj.GetInstanceID(), thread);
+        thread.Start();
+    }
+
+    internal void StopExecution(GameObject obj)
+    {
+        Log($"StopExecution {obj.GetInstanceID()}");
+        if (threads.ContainsKey(obj.GetInstanceID()))
         {
-            threads[robot.gameObject.GetInstanceID()].Abort();
-            threads.Remove(robot.gameObject.GetInstanceID());
+            threads[obj.GetInstanceID()].Abort();
+            threads.Remove(obj.GetInstanceID());
         }
     }
 
-    public object SetGlobal(object[] args)
+    void PrintErrors(Interpreter interpreter)
+    {
+        var sw = new StringWriter();
+        interpreter.PrintErr(sw);
+        Debug.Log(sw.ToString());
+    }
+
+    public object GlobalSet(object[] args)
     {
         globals[(string)args[0]] = args[1];
         return null;
     }
 
-    public object CheckGlobal(object[] args)
+    public object GlobalCheck(object[] args)
     {
         return globals.ContainsKey((string)args[0]);
     }
 
-    public object UnsetGlobal(object[] args)
+    public object GlobalUnset(object[] args)
     {
         globals.Remove((string)args[0]);
         return null;
     }
 
-    public object GetGlobal(object[] args)
+    public object GlobalGet(object[] args)
     {
         return globals[(string)args[0]];
     }
@@ -137,5 +183,10 @@ public class Executor : MonoBehaviour
     {
         print(args[0].ToString());
         return null;
+    }
+
+    public object Sqrt(object[] args)
+    {
+        return Mathf.Sqrt((float)args[0]);
     }
 }

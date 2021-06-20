@@ -1,1 +1,34 @@
 // TURRET
+
+while true
+{
+    if (robot_maxid() == 0)
+        continue;
+ 
+    target = 0;
+    dist = d(0);
+    
+    if (dist > RANGE)
+        continue;
+
+    for i = 0 to robot_maxid() - 1
+    {
+        if (d(i) < dist && dist <= RANGE)
+        {
+            target = i;
+            dist = d(i);
+        }
+    }
+
+    shoot(target);
+}
+
+float d(int r)
+{
+    return sqrt(sqr(x() - robot_x(r)) + sqr(y() - robot_y(r)));
+}
+
+float sqr(float x)
+{
+    return x * x;
+}

@@ -20,12 +20,12 @@ public class RobotTarget
 		this.levelLoader = levelLoader;
 	}
 
-	internal int C()
+	internal int Col()
     {
 		return tile.x;
     }
 
-	internal int R()
+	internal int Row()
     {
 		return tile.y;
     }
@@ -33,9 +33,8 @@ public class RobotTarget
 	internal void Calculate()
     {
 		if (calculated) return;
-		position = levelLoader.GetTilePosition(tile.y, tile.x);
+		position = levelLoader.GetTilePosition(tile.y, tile.x, robot.transform.position.y);
 		rotation = Quaternion.LookRotation(position - robot.transform.position);
-		position.y = robot.transform.position.y;
 		calculated = true;
     }
 

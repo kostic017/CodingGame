@@ -10,49 +10,58 @@ public class LevelLoader : MonoBehaviour
 
     internal Level Level { get; private set; }
 
+    private LevelObject wallObj;
+
     private readonly Dictionary<Color, LevelObject> mappings = new Dictionary<Color, LevelObject>();
 
     void Awake()
     {
         Level = new Level(map.width, map.height);
 
-        var l = map.width * (tileSize.length + tileSpacing);
-        var w = map.height * (tileSize.width + tileSpacing);
-        Camera.main.transform.position = new Vector3(l * 0.5f, Camera.main.transform.position.y, w * 0.25f);
-
         foreach (var levelObject in levelObjects)
+        {
             mappings.Add(levelObject.mapColor, levelObject);
-
+            if (levelObject.prefab.name == "Wall")
+                wallObj = levelObject;
+        }
+ 
         for (var r = 0; r < map.height; ++r)
         {
             for (var c = 0; c < map.width; ++c)
             {
                 var levelObject = mappings[map.GetPixel(c, r)];
-                Level.Tiles[r, c] = levelObject.prefab.name;
-                
-                var position = GetTilePosition(r, c);
-                position.y = levelObject.heightScale * 0.5f;
 
-                var gameObject = Instantiate(levelObject.prefab, position, Quaternion.identity);
-                
-                gameObject.transform.localScale = new Vector3(tileSize.length, tileSize.height * levelObject.heightScale, tileSize.length);
-
-                if (levelObject.prefab.name == "Spawner")
+                if (levelObject.isTile)
                 {
-                    var spawner = gameObject.GetComponent<Spawner>();
-                    spawner.SetPosition(r, c);
+                    var obj = InstantiateTile(r, c, levelObject);
+                    if (levelObject.prefab.name == "Spawner")
+                        obj.GetComponent<Spawner>().SetPosition(r, c);
+                    else if (levelObject.prefab.name == "Exit")
+                        Level.SetExit(r, c);
                 }
-                else if (levelObject.prefab.name == "Exit")
+                else
                 {
-                    Level.SetExit(c, r);
+                    var wall = InstantiateTile(r, c, wallObj);
+                    var position = GetTilePosition(r, c, wall.transform.position.y + levelObject.heightScale * 0.5f);
+                    var obj = Instantiate(levelObject.prefab, position, Quaternion.identity);
+                    if (levelObject.prefab.name == "Turret")
+                        Level.Add(obj.GetComponent<Turret>());
                 }
             }
         }
     }
 
-    internal Vector3 GetTilePosition(int r, int c)
+    GameObject InstantiateTile(int r, int c, LevelObject levelObject)
     {
-        return new Vector3(c * (tileSize.length + tileSpacing), 0f, r * (tileSize.width + tileSpacing));
+        var position = GetTilePosition(r, c, levelObject.heightScale * 0.5f);
+        var obj = Instantiate(levelObject.prefab, position, Quaternion.identity);
+        obj.transform.localScale = new Vector3(tileSize.length, tileSize.height * levelObject.heightScale, tileSize.length);
+        Level.Tiles[r, c] = levelObject.prefab.name;
+        return obj;
     }
 
+    internal Vector3 GetTilePosition(int r, int c, float y)
+    {
+        return new Vector3(c * (tileSize.length + tileSpacing), y, r * (tileSize.width + tileSpacing));
+    }
 }

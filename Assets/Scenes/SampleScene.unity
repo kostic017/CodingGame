@@ -171,20 +171,28 @@ MonoBehaviour:
     length: 5
     width: 5
     height: 1
-  tileSpacing: 0.8
+  tileSpacing: 0.7
   levelObjects:
   - mapColor: {r: 0, g: 0, b: 0, a: 1}
     prefab: {fileID: 671621532132123810, guid: 2d5643e4a3396e04080dd95cd4f8098f, type: 3}
     heightScale: 1
+    isTile: 1
   - mapColor: {r: 1, g: 1, b: 1, a: 1}
     prefab: {fileID: 7102534813873633955, guid: b1a7a36e286fe1b4dba4283ff010430a, type: 3}
     heightScale: 1
+    isTile: 1
   - mapColor: {r: 0, g: 1, b: 0, a: 1}
     prefab: {fileID: 5599816358016061242, guid: ff1433bc76db35e4fab70cdaba1154ac, type: 3}
     heightScale: 1
+    isTile: 1
   - mapColor: {r: 1, g: 0, b: 0, a: 1}
     prefab: {fileID: 4449387086799100009, guid: 34f19c200f3dfef4eb7db5bf5f1f26ec, type: 3}
     heightScale: 1
+    isTile: 1
+  - mapColor: {r: 1, g: 0, b: 1, a: 1}
+    prefab: {fileID: 962482899000133087, guid: 338bfc10882e3f548a7dc0d1db606317, type: 3}
+    heightScale: 1
+    isTile: 0
 --- !u!1 &224181143
 GameObject:
   m_ObjectHideFlags: 0
@@ -679,13 +687,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.5735764, y: 0, z: 0, w: 0.8191521}
-  m_LocalPosition: {x: 0, y: 150, z: 0}
+  m_LocalRotation: {x: 0.42261827, y: 0, z: 0, w: 0.9063079}
+  m_LocalPosition: {x: 50, y: 150, z: -80}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 70, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 50, y: 0, z: 0}
 --- !u!114 &963194229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1645,7 +1653,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 224857267984180766, guid: 79a74f96889fc1c429f043e7fa8caf72, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.49454004
+      value: -0.49354002
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79a74f96889fc1c429f043e7fa8caf72, type: 3}
