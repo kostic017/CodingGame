@@ -111,7 +111,6 @@ public class Robot : MonoBehaviour
 
 	public object MoveUp(object[] _)
 	{
-		executor.Log($"MoveUp {Id}");
 		ValidateMove(Move.Up);
 		SetTarget(Move.Up);
 		while (target != null);
@@ -120,7 +119,6 @@ public class Robot : MonoBehaviour
 
 	public object MoveDown(object[] _)
 	{
-		executor.Log($"MoveDown {Id}");
 		ValidateMove(Move.Down);
 		SetTarget(Move.Down);
 		while (target != null);
@@ -129,7 +127,6 @@ public class Robot : MonoBehaviour
 
 	public object MoveLeft(object[] _)
 	{
-		executor.Log($"MoveLeft {Id}");
 		ValidateMove(Move.Left);
 		SetTarget(Move.Left);
 		while (target != null);
@@ -138,7 +135,6 @@ public class Robot : MonoBehaviour
 
 	public object MoveRight(object[] _)
 	{
-		executor.Log($"MoveRight {Id}");
 		ValidateMove(Move.Right);
 		SetTarget(Move.Right);
 		while (target != null);

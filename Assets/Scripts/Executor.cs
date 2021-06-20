@@ -18,19 +18,11 @@ public class Executor : MonoBehaviour
 
     internal bool IsRunning { get; private set; }
 
-    private readonly bool ShouldLog = false;
-
     void OnDestroy()
     {
         foreach (var thread in threads.Values)
             thread.Abort();
         threads.Clear();
-    }
-
-    internal void Log(string message)
-    {
-        if (ShouldLog)
-            print(message);
     }
 
     internal void Run()
@@ -149,7 +141,6 @@ public class Executor : MonoBehaviour
 
     internal void StopExecution(GameObject obj)
     {
-        Log($"StopExecution {obj.GetInstanceID()}");
         if (threads.ContainsKey(obj.GetInstanceID()))
         {
             threads[obj.GetInstanceID()].Abort();
@@ -161,7 +152,7 @@ public class Executor : MonoBehaviour
     {
         var sw = new StringWriter();
         interpreter.PrintErr(sw);
-        Debug.Log(sw.ToString());
+        Debug.LogError(sw.ToString());
     }
 
     public object GlobalSet(object[] args)
