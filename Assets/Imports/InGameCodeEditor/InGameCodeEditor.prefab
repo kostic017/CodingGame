@@ -1229,8 +1229,8 @@ MonoBehaviour:
   lineHighlight: {fileID: 114257522944123224}
   lineNumberBackground: {fileID: 114345971810198918}
   scrollbar: {fileID: 114676008144805830}
-  editorTheme: {fileID: 11400000, guid: 112ff7dfadfdb9f4783b8a8ba0c83394, type: 2}
-  languageTheme: {fileID: 11400000, guid: 4fd1ce3a61e5631478883e158c51892b, type: 2}
+  editorTheme: {fileID: 0}
+  languageTheme: {fileID: 0}
   lineNumbers: 1
   lineNumbersSize: 20
   applyLineOffsetFix: 0

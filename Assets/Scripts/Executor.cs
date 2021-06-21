@@ -66,12 +66,12 @@ public class Executor : MonoBehaviour
         b.RegisterFunction(PigeonType.Void, "move_down", robot.MoveDown);
         b.RegisterFunction(PigeonType.Void, "move_left", robot.MoveLeft);
         b.RegisterFunction(PigeonType.Void, "move_right", robot.MoveRight);
-            
+
         b.RegisterFunction(PigeonType.String, "get_tile", levelLoader.Level.GetTile, PigeonType.Int, PigeonType.Int);
 
         b.RegisterFunction(PigeonType.Int, "string_length", PigeonString.Length, PigeonType.String);
         b.RegisterFunction(PigeonType.String, "string_char", PigeonString.Char, PigeonType.String, PigeonType.Int);
-            
+
         b.RegisterFunction(PigeonType.Int, "queue_create", PigeonQueue.Create);
         b.RegisterFunction(PigeonType.Void, "queue_destroy", PigeonQueue.Destroy, PigeonType.Int);
         b.RegisterFunction(PigeonType.Void, "queue_enqueue", PigeonQueue.Enqueue, PigeonType.Int, PigeonType.Any);
@@ -121,8 +121,9 @@ public class Executor : MonoBehaviour
         b.RegisterFunction(PigeonType.Int, "robot_count", levelLoader.Level.RobotCount);
 
         b.RegisterFunction(PigeonType.Void, "shoot", turret.Shoot, PigeonType.Int);
-        b.RegisterFunction(PigeonType.Void, "print", Print, PigeonType.Any);
+
         b.RegisterFunction(PigeonType.Float, "sqrt", Sqrt, PigeonType.Float);
+        b.RegisterFunction(PigeonType.Void, "print", Print, PigeonType.Any);
 
         var interpreter = new Interpreter(pigeonEditor.GetCode("Turret"), b);
 
