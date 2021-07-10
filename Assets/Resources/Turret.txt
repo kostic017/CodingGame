@@ -4,10 +4,10 @@ while true
 {
     if (robot_count() == 0)
         continue;
- 
-    target = 0;
-    dist = d(0);
-    
+
+    let target = 0;
+    let dist = d(0);
+
     if (dist > RANGE)
         continue;
 
