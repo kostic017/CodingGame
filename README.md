@@ -3,35 +3,35 @@ If functions returns `any`, variants with `_i` (int), `_f` (float), and `_b` (bo
 # Turret
 
 ```
-int ID;
-float RANGE;
+int ID;
+float RANGE;              // doseg topa
 
-float x;
-float y;
+float x();                // x-koordianta topa
+float y();                // y-koordinata topa
 
-float robot_x(int index);
-float robot_y(int index);
-int robot_count();
+float robot_x(int index); // x-koordinata robota
+float robot_y(int index); // y-koordinata robota
+int robot_count();        // trenutan broj robota
 
-void shoot(int index);
+void shoot(int index);    // markiranje trenutne mete
 
-float sqrt(float n);
-void print(any message);
+float sqrt(float n);
+void print(any message);
 ```
 
 # Robot
 
 ```
-int r;
-int c;
+int ID;
 
-int ID;
+int EXIT_C;       // kolona u grid-u u kojoj se nalazi izlaz
+int EXIT_R;       // red u grid-u u kome se nalazi izlaz
 
-int EXIT_C;
-int EXIT_R;
+int LEVEL_WIDTH;  // širina grida
+int LEVEL_HEIGHT; // visina grida
 
-int LEVEL_WIDTH;
-int LEVEL_HEIGHT;
+int c();          // kolona u grid-u u kojoj se robot nalazi
+int r();          // red u grid-u u kome se robot nalazi
 
 void move_up();
 void move_down();
