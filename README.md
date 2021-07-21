@@ -3,8 +3,7 @@ If functions returns `any`, variants with `_i` (int), `_f` (float), and `_b` (bo
 # Turret
 
 ```
-int ID;
-float RANGE;              // doseg topa
+float RANGE;              // doseg metka
 
 float x();                // x-koordianta topa
 float y();                // y-koordinata topa
@@ -22,8 +21,6 @@ void print(any message);
 # Robot
 
 ```
-int ID;
-
 int EXIT_C;       // kolona u grid-u u kojoj se nalazi izlaz
 int EXIT_R;       // red u grid-u u kome se nalazi izlaz
 
@@ -49,12 +46,16 @@ void queue_enqueue(int queue, any value);
 any queue_dequeue(int queue);
 bool queue_empty(int queue);
 
-int list_create();
-void list_destroy(int list);
-void list_add(int list, any value);
-void list_remove(int list, int index);
-any list_get(int list, int index);
-int list_size(int list);
+int map_create();
+void map_destroy(int map);
+void map_add(int map, any key, any value);
+any map_get(int map, any key);
+bool map_empty(int map);
+
+int pair_create(any x, any y);
+void pair_destroy(int pair);
+any pair_get_x(int pair);
+any pair_get_y(int pair);
 
 int set_create();
 void set_destroy(int set);

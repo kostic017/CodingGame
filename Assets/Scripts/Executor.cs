@@ -54,8 +54,6 @@ public class Executor : MonoBehaviour
         b.RegisterFunction(PigeonType.Int, "r", robot.R);
         b.RegisterFunction(PigeonType.Int, "c", robot.C);
 
-        b.RegisterVariable(PigeonType.Int, "ID", true, robot.Id);
-
         b.RegisterVariable(PigeonType.Int, "EXIT_C", true, levelLoader.Level.Exit.x);
         b.RegisterVariable(PigeonType.Int, "EXIT_R", true, levelLoader.Level.Exit.y);
 
@@ -78,12 +76,16 @@ public class Executor : MonoBehaviour
         b.RegisterFunction(PigeonType.Any, "queue_dequeue", PigeonQueue.Dequeue, PigeonType.Int);
         b.RegisterFunction(PigeonType.Bool, "queue_empty", PigeonQueue.Empty, PigeonType.Int);
 
-        b.RegisterFunction(PigeonType.Int, "list_create", PigeonList.Create);
-        b.RegisterFunction(PigeonType.Void, "list_destroy", PigeonList.Destroy, PigeonType.Int);
-        b.RegisterFunction(PigeonType.Void, "list_add", PigeonList.Add, PigeonType.Int, PigeonType.Any);
-        b.RegisterFunction(PigeonType.Void, "list_remove", PigeonList.Remove, PigeonType.Int, PigeonType.Int);
-        b.RegisterFunction(PigeonType.Any, "list_get", PigeonList.Get, PigeonType.Int, PigeonType.Int);
-        b.RegisterFunction(PigeonType.Int, "list_size", PigeonList.Size, PigeonType.Int);
+        b.RegisterFunction(PigeonType.Int, "map_create", PigeonMap.Create);
+        b.RegisterFunction(PigeonType.Void, "map_destroy", PigeonMap.Destroy, PigeonType.Int);
+        b.RegisterFunction(PigeonType.Void, "map_add", PigeonMap.Add, PigeonType.Int, PigeonType.Any, PigeonType.Any);
+        b.RegisterFunction(PigeonType.Any, "map_get", PigeonMap.Get, PigeonType.Int, PigeonType.Any);
+        b.RegisterFunction(PigeonType.Bool, "map_empty", PigeonMap.Empty, PigeonType.Int);
+
+        b.RegisterFunction(PigeonType.Int, "pair_create", PigeonPair.Create, PigeonType.Any, PigeonType.Any);
+        b.RegisterFunction(PigeonType.Void, "pair_destroy", PigeonPair.Destroy, PigeonType.Int);
+        b.RegisterFunction(PigeonType.Any, "pair_get_x", PigeonPair.GetX, PigeonType.Int);
+        b.RegisterFunction(PigeonType.Any, "pair_get_y", PigeonPair.GetY, PigeonType.Int);
 
         b.RegisterFunction(PigeonType.Int, "set_create", PigeonSet.Create);
         b.RegisterFunction(PigeonType.Void, "set_destroy", PigeonSet.Destroy, PigeonType.Int);
@@ -110,7 +112,6 @@ public class Executor : MonoBehaviour
     {
         var b = new Builtins();
 
-        b.RegisterVariable(PigeonType.Int, "ID", true, turret.Id);
         b.RegisterVariable(PigeonType.Float, "RANGE", true, turret.Range);
 
         b.RegisterFunction(PigeonType.Float, "x", turret.X);
