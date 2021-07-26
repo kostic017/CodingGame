@@ -26,23 +26,17 @@ string solve()
     while true
     {
         let moves = queue_dequeue(queue);
-        if make_move("U", moves, queue, visited, end_positions) return queue_dequeue(queue);
-        if make_move("D", moves, queue, visited, end_positions) return queue_dequeue(queue);
-        if make_move("L", moves, queue, visited, end_positions) return queue_dequeue(queue);
-        if make_move("R", moves, queue, visited, end_positions) return queue_dequeue(queue);
+        if (is_at_exit(add_move("U", moves, queue, visited, end_positions))) return moves;
+        if (is_at_exit(add_move("D", moves, queue, visited, end_positions))) return moves;
+        if (is_at_exit(add_move("L", moves, queue, visited, end_positions))) return moves;
+        if (is_at_exit(add_move("R", moves, queue, visited, end_positions))) return moves;
     }
 }
 
-bool make_move(string move, string moves, int queue, int visited, int end_positions)
+int add_move(string move, string moves, int queue, int visited, int end_positions)
 {
     let cp = map_get_i(end_positions, moves);
     let np = next_pos(cp, move);
-
-    if (pair_get_x_i(np) == EXIT_C && pair_get_y_i(np) == EXIT_R)
-    {
-        queue_enqueue(queue, moves + move);
-        return true;
-    }
 
     let np_s = pair_get_x_i(np) + "-" + pair_get_y_i(np);
 
@@ -53,7 +47,7 @@ bool make_move(string move, string moves, int queue, int visited, int end_positi
         map_add(end_positions, moves + move, np);
     }
 
-    return false;
+    return np;
 }
 
 int next_pos(int cp, string move)
@@ -64,6 +58,11 @@ int next_pos(int cp, string move)
         else if (move == "D") return pair_create(x, y - 1);
         else if (move == "L") return pair_create(x - 1, y);
         else if (move == "R") return pair_create(x + 1, y);
+}
+
+bool is_at_exit(int pos)
+{
+    return pair_get_x_i(pos) == EXIT_C && pair_get_y_i(pos) == EXIT_R;
 }
 
 bool valid(int next_pos)
