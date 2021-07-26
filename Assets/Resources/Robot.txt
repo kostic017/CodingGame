@@ -21,6 +21,7 @@ string solve()
     let end_positions = map_create();
 
     queue_enqueue(queue, "");
+    set_add(visited, c() + "-" + r());
     map_add(end_positions, "", pair_create(c(), r()));
 
     while true
