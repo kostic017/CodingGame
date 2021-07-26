@@ -3,16 +3,15 @@ If functions returns `any`, variants with `_i` (int), `_f` (float), and `_b` (bo
 # Turret
 
 ```
-float RANGE;              // doseg metka
+float RANGE;              // doseg metka
 
-float x();                // x-koordianta topa
-float y();                // y-koordinata topa
+float x();                // x-koordianta topa
+float y();                // y-koordinata topa
+void shoot(int index);    // markiranje trenutne mete
 
-float robot_x(int index); // x-koordinata robota
-float robot_y(int index); // y-koordinata robota
-int robot_count();        // trenutan broj robota
-
-void shoot(int index);    // markiranje trenutne mete
+int robot_count();        // trenutan broj robota
+float robot_x(int index); // x-koordinata robota
+float robot_y(int index); // y-koordinata robota
 
 float sqrt(float n);
 void print(any message);
