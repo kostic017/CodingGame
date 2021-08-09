@@ -18,25 +18,25 @@ string solve()
 {
     let queue = queue_create();
     let visited = set_create();
-    let end_positions = map_create();
+    let endings = map_create();
 
     queue_enqueue(queue, "");
     set_add(visited, c() + "-" + r());
-    map_add(end_positions, "", pair_create(c(), r()));
+    map_add(endings, "", pair_create(c(), r()));
 
     while true
     {
         let moves = queue_dequeue(queue);
-        if (is_at_exit(add_move("U", moves, queue, visited, end_positions))) return moves;
-        if (is_at_exit(add_move("D", moves, queue, visited, end_positions))) return moves;
-        if (is_at_exit(add_move("L", moves, queue, visited, end_positions))) return moves;
-        if (is_at_exit(add_move("R", moves, queue, visited, end_positions))) return moves;
+        if (is_at_exit(add_move("U", moves, queue, visited, endings))) return moves;
+        if (is_at_exit(add_move("D", moves, queue, visited, endings))) return moves;
+        if (is_at_exit(add_move("L", moves, queue, visited, endings))) return moves;
+        if (is_at_exit(add_move("R", moves, queue, visited, endings))) return moves;
     }
 }
 
-int add_move(string move, string moves, int queue, int visited, int end_positions)
+int add_move(string move, string moves, int queue, int visited, int endings)
 {
-    let cp = map_get_i(end_positions, moves);
+    let cp = map_get_i(endings, moves);
     let np = next_pos(cp, move);
 
     let np_s = pair_get_x_i(np) + "-" + pair_get_y_i(np);
@@ -45,7 +45,7 @@ int add_move(string move, string moves, int queue, int visited, int end_position
     {
         set_add(visited, np_s);
         queue_enqueue(queue, moves + move);
-        map_add(end_positions, moves + move, np);
+        map_add(endings, moves + move, np);
     }
 
     return np;
