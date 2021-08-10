@@ -46,7 +46,7 @@ public class Robot : MonoBehaviour
 		if (target != null)
 		{
 
-			if (anim.GetBool("Open_Anim") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime <= 0.7f)
+			if (anim.GetBool("Open_Anim") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime <= 0.8f)
 				return;
 
 			target.Calculate();

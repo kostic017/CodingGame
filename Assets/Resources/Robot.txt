@@ -1,14 +1,12 @@
-// ROBOT
-
 if (!global_check("moves"))
 {
     let visited = set_create();
-    solve(c(), r(), visited, "");
+    solve(c(), r(), "", visited);
 }
 
 let moves = global_get("moves");
 
-for i = 0 to string_length(moves) - 1
+for i = 0 to string_len(moves) - 1
 {
     let move = string_char(moves, i);
     if (move == "U") move_up();
@@ -28,27 +26,26 @@ bool is_valid(int x, int y, int visited)
     return true;
 }
  
-void solve(int x, int y, int visited, string moves)
+void solve(int x, int y, string moves, int visited)
 {
+    if global_check("moves") return;
+
     if x == EXIT_C && y == EXIT_R
-    {
-        global_set("moves", moves);
-        return;
-    }
+        global_set("moves", moves);  
     
     set_add(visited, x + "-" + y);
  
     if is_valid(x, y + 1, visited)
-        solve(x, y + 1, visited, moves + "U");
+        solve(x, y + 1, moves + "U", visited);
 
     if is_valid(x, y - 1, visited)
-        solve(x, y - 1, visited, moves + "D");
+        solve(x, y - 1, moves + "D", visited);
 
     if is_valid(x - 1, y, visited)
-        solve(x - 1, y, visited, moves + "L");
+        solve(x - 1, y, moves + "L", visited);
 
     if is_valid(x + 1, y, visited)
-        solve(x + 1, y, visited, moves + "R");
+        solve(x + 1, y, moves + "R", visited);
  
     set_remove(visited, x + "-" + y);
 }

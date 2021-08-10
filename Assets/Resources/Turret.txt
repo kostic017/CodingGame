@@ -1,5 +1,3 @@
-// TURRET
-
 while true
 {
     if (robot_count() == 0)

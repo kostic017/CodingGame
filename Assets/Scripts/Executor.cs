@@ -67,25 +67,8 @@ public class Executor : MonoBehaviour
 
         b.RegisterFunction(PigeonType.String, "get_tile", levelLoader.Level.GetTile, PigeonType.Int, PigeonType.Int);
 
-        b.RegisterFunction(PigeonType.Int, "string_length", PigeonString.Length, PigeonType.String);
+        b.RegisterFunction(PigeonType.Int, "string_len", PigeonString.Length, PigeonType.String);
         b.RegisterFunction(PigeonType.String, "string_char", PigeonString.Char, PigeonType.String, PigeonType.Int);
-
-        b.RegisterFunction(PigeonType.Int, "queue_create", PigeonQueue.Create);
-        b.RegisterFunction(PigeonType.Void, "queue_destroy", PigeonQueue.Destroy, PigeonType.Int);
-        b.RegisterFunction(PigeonType.Void, "queue_enqueue", PigeonQueue.Enqueue, PigeonType.Int, PigeonType.Any);
-        b.RegisterFunction(PigeonType.Any, "queue_dequeue", PigeonQueue.Dequeue, PigeonType.Int);
-        b.RegisterFunction(PigeonType.Bool, "queue_empty", PigeonQueue.Empty, PigeonType.Int);
-
-        b.RegisterFunction(PigeonType.Int, "map_create", PigeonMap.Create);
-        b.RegisterFunction(PigeonType.Void, "map_destroy", PigeonMap.Destroy, PigeonType.Int);
-        b.RegisterFunction(PigeonType.Void, "map_add", PigeonMap.Add, PigeonType.Int, PigeonType.Any, PigeonType.Any);
-        b.RegisterFunction(PigeonType.Any, "map_get", PigeonMap.Get, PigeonType.Int, PigeonType.Any);
-        b.RegisterFunction(PigeonType.Bool, "map_empty", PigeonMap.Empty, PigeonType.Int);
-
-        b.RegisterFunction(PigeonType.Int, "pair_create", PigeonPair.Create, PigeonType.Any, PigeonType.Any);
-        b.RegisterFunction(PigeonType.Void, "pair_destroy", PigeonPair.Destroy, PigeonType.Int);
-        b.RegisterFunction(PigeonType.Any, "pair_get_x", PigeonPair.GetX, PigeonType.Int);
-        b.RegisterFunction(PigeonType.Any, "pair_get_y", PigeonPair.GetY, PigeonType.Int);
 
         b.RegisterFunction(PigeonType.Int, "set_create", PigeonSet.Create);
         b.RegisterFunction(PigeonType.Void, "set_destroy", PigeonSet.Destroy, PigeonType.Int);
