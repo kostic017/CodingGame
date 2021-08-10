@@ -10,8 +10,8 @@ public class Robot : MonoBehaviour
 		Right
 	}
 
-	internal readonly float MoveSpeed = 10f;
-	internal readonly float RotationSpeed = 100f;
+	internal readonly float MoveSpeed = 13f;
+	internal readonly float RotationSpeed = 200f;
 
 	internal int Id { get; set; }
 	internal int Row { get; private set; }
@@ -22,7 +22,7 @@ public class Robot : MonoBehaviour
 	private Executor executor;
 	private LevelLoader levelLoader;
 
-	private int hp = 3;
+	private int hp = 4;
 	private RobotTarget target;
 
 	void Awake()
@@ -30,7 +30,7 @@ public class Robot : MonoBehaviour
 		executor = FindObjectOfType<Executor>();
 		anim = gameObject.GetComponent<Animator>();
 		levelLoader = FindObjectOfType<LevelLoader>();
-		anim.speed = 1.2f;
+		anim.speed = 1.3f;
 	}
 
 	void Update()
