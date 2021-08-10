@@ -25,8 +25,7 @@ public static class PigeonSet
 
     public static object Remove(object[] args)
     {
-        Set(args).Remove(args[1]);
-        return null;
+        return Set(args).Remove(args[1]);
     }
 
     public static object In(object[] args)

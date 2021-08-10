@@ -51,14 +51,14 @@ public class Executor : MonoBehaviour
     {
         var b = new Builtins();
 
-        b.RegisterFunction(PigeonType.Int, "r", robot.R);
-        b.RegisterFunction(PigeonType.Int, "c", robot.C);
-
         b.RegisterVariable(PigeonType.Int, "EXIT_C", true, levelLoader.Level.Exit.x);
         b.RegisterVariable(PigeonType.Int, "EXIT_R", true, levelLoader.Level.Exit.y);
 
         b.RegisterVariable(PigeonType.Int, "LEVEL_WIDTH", true, levelLoader.Level.W);
         b.RegisterVariable(PigeonType.Int, "LEVEL_HEIGHT", true, levelLoader.Level.H);
+
+        b.RegisterFunction(PigeonType.Int, "r", robot.R);
+        b.RegisterFunction(PigeonType.Int, "c", robot.C);
 
         b.RegisterFunction(PigeonType.Void, "move_up", robot.MoveUp);
         b.RegisterFunction(PigeonType.Void, "move_down", robot.MoveDown);
@@ -73,7 +73,7 @@ public class Executor : MonoBehaviour
         b.RegisterFunction(PigeonType.Int, "set_create", PigeonSet.Create);
         b.RegisterFunction(PigeonType.Void, "set_destroy", PigeonSet.Destroy, PigeonType.Int);
         b.RegisterFunction(PigeonType.Void, "set_add", PigeonSet.Add, PigeonType.Int, PigeonType.Any);
-        b.RegisterFunction(PigeonType.Void, "set_remove", PigeonSet.Remove, PigeonType.Int, PigeonType.Any);
+        b.RegisterFunction(PigeonType.Any, "set_remove", PigeonSet.Remove, PigeonType.Int, PigeonType.Any);
         b.RegisterFunction(PigeonType.Bool, "set_in", PigeonSet.In, PigeonType.Int, PigeonType.Any);
 
         b.RegisterFunction(PigeonType.Void, "print", Print, PigeonType.Any);
