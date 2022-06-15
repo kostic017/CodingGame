@@ -1,33 +1,39 @@
+Proof of concept coding game that uses the [Pigeon](https://github.com/kostic017/pigeon) programming language.
+
+![](screenshot.png)
+
+# Built-ins
+
 If functions returns `any`, variants with `_i` (int), `_f` (float), and `_b` (bool) suffixes are available.
 
-# Turret
+## Turret
 
 ```
-float RANGE;              // doseg metka
+float RANGE;
 
-float x();                // x-koordianta topa
-float y();                // y-koordinata topa
-void shoot(int index);    // markiranje trenutne mete
+float x();
+float y();
+void shoot(int index);
 
-int robot_count();        // trenutan broj robota
-float robot_x(int index); // x-koordinata robota
-float robot_y(int index); // y-koordinata robota
+int robot_count();
+float robot_x(int index);
+float robot_y(int index);
 
 float sqrt(float n);
 void print(any message);
 ```
 
-# Robot
+## Robot
 
 ```
-int EXIT_C;       // kolona u grid-u u kojoj se nalazi izlaz
-int EXIT_R;       // red u grid-u u kome se nalazi izlaz
+int EXIT_C;
+int EXIT_R;
 
-int LEVEL_WIDTH;  // širina grida
-int LEVEL_HEIGHT; // visina grida
+int LEVEL_WIDTH;
+int LEVEL_HEIGHT;
 
-int c();          // kolona u grid-u u kojoj se robot nalazi
-int r();          // red u grid-u u kome se robot nalazi
+int c();
+int r();
 
 void move_up();
 void move_down();
