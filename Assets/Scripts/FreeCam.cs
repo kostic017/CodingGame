@@ -6,6 +6,11 @@ public class FreeCam : MonoBehaviour
 
     public float zoomSensitivity = 50f;
 
+    void Start()
+    {
+        Screen.fullScreen = true;
+    }
+
     void Update()
     {
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
