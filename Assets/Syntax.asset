@@ -17,7 +17,7 @@ MonoBehaviour:
   keywordGroups:
   - group: Keyword Group
     keywords: if else for to downto do while break continue return bool int float
-      string void true false
+      string void true false let const
     highlightColor: {r: 0.3372549, g: 0.6117647, b: 0.8392157, a: 1}
     caseSensitive: 1
   symbolGroup:
